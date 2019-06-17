@@ -6,7 +6,7 @@ public class Main {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src/main/resources/db");
+            c = DriverManager.getConnection("jdbc:sqlite:src/main/resources/onlineshop");
             System.out.println("Opened database successfully");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTS;");
