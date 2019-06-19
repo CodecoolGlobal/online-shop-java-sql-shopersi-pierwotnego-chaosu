@@ -1,8 +1,19 @@
+import dao.sql.DataSource;
+import dao.sql.ProductDAO;
+import model.shop.Product;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(getCategoryId("Animals"));
+        ArrayList<Product> list = new ProductDAO().read();
+
+        System.out.println(list);
+
+        ArrayList<Product> list2 = new ProductDAO().read();
+
+        System.out.println(list2);
     }
 
 
@@ -13,8 +24,7 @@ public class Main {
         int colId=0;
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src/main/resources/onlineshop.db");
+            c = DataSource.getConnection();
             System.out.println("Opened database successfully");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CATEGORIES where NAME = \'"+ category + "\' ");
@@ -38,8 +48,7 @@ public class Main {
         Connection c = null;
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:src/main/resources/onlineshop.db");
+            c = DataSource.getConnection();
             System.out.println("Opened database successfully");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTS;");

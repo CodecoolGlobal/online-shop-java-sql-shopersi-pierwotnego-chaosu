@@ -6,14 +6,15 @@ public class Product {
     private float price;
     private int amount;
     private boolean isAvailable;
-    private Category category;
+    private int category;
 
-    public Product(int id, String name, float price, int amount, Category category) {
+    public Product(int id, String name, float price, int amount, boolean isAvailable, int category) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.amount = amount;
         this.category = category;
+        this.isAvailable = isAvailable;
     }
 
     public int getId() {
@@ -36,7 +37,7 @@ public class Product {
         return isAvailable;
     }
 
-    public Category getCategory() {
+    public int getCategory() {
         return category;
     }
 
@@ -57,7 +58,7 @@ public class Product {
         isAvailable = available;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -66,6 +67,10 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", isAvailable=" + isAvailable +
+                ", category=" + category +
                 '}';
     }
 }
