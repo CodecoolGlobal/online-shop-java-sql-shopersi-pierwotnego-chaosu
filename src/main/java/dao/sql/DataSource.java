@@ -3,16 +3,21 @@ package dao.sql;
 import java.sql.*;
 
 public class DataSource {
-    private static String url = "jdbc:sqlite:src/main/resources/onlineshop.db";
-    private static String driverName = "org.sqlite.JDBC";
+    private String url;
+    private String driverName;
+
+    public DataSource(){
+        this.url = "jdbc:sqlite:src/main/resources/onlineshop.db";
+        this.driverName = "org.sqlite.JDBC";
+    }
 //    private static String username = "root";
 //    private static String password = "root";
-    private static Connection con;
+    private Connection con;
 //    private static String urlstring;
-    private static Statement stmt = null;
-    private static ResultSet rs = null;
+    private Statement stmt = null;
+    private ResultSet rs = null;
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         try {
 
             Class.forName(driverName);
@@ -29,8 +34,9 @@ public class DataSource {
         return con;
     }
 
-    public static ResultSet executeQuery(String sql){
-        con = DataSource.getConnection();
+    public ResultSet executeQuery(String sql){
+        DataSource ds = new DataSource();
+        this.con = ds.getConnection();
 //        System.out.println("Opened database successfully");
         try {
             stmt = con.createStatement();
@@ -41,7 +47,19 @@ public class DataSource {
         return rs;
     }
 
-    public static void close(){
+    public void updateQuery(String sql){
+        DataSource ds = new DataSource();
+        this.con = ds.getConnection();
+//        System.out.println("Opened database successfully");
+        try {
+            stmt = con.createStatement();
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void close(){
         try {
             con.close();
             stmt.close();

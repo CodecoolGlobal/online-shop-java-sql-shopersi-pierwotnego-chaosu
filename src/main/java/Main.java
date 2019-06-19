@@ -24,7 +24,7 @@ public class Main {
         int colId=0;
 
         try {
-            c = DataSource.getConnection();
+            c = new DataSource().getConnection();
             System.out.println("Opened database successfully");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CATEGORIES where NAME = \'"+ category + "\' ");
@@ -48,7 +48,7 @@ public class Main {
         Connection c = null;
 
         try {
-            c = DataSource.getConnection();
+            c = new DataSource().getConnection();
             System.out.println("Opened database successfully");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCTS;");
