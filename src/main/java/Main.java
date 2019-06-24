@@ -14,10 +14,5 @@ public class Main {
         LogInController logIn = new LogInController();
         logIn.run();
 
-       // User newUser = new UsersDAO().readUser("Dejw","dejw");
-         //           System.out.println(newUser.getName());
-           // System.out.println(newUser.getPassowrd());
-           // System.out.println(newUser.getId());
-           // System.out.println(newUser.getAdmin());
     }
 }

@@ -1,12 +1,20 @@
 package controler;
 
 
+import model.shop.Customer;
+import model.shop.User;
 import view.Display;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class CustomerController {
+    private User user;
+
+    public CustomerController(User user){
+        this.user = user;
+    }
+
 
 
     public void run() {
