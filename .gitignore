@@ -7,7 +7,3 @@ target/
 *.xml
 .classpath
 launch.json
-*.db
-
-
-
