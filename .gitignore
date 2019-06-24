@@ -7,4 +7,3 @@ target/
 *.xml
 .classpath
 launch.json
-src/main/resources/onlineshop.db

@@ -4,7 +4,6 @@ import model.shop.Product;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ProductDAO implements DAO {
@@ -28,7 +27,7 @@ public class ProductDAO implements DAO {
 
                 list.add((new Product(id, name, price, amount, isAvailable, category)));
             }
-            rs.close();
+            ds.close();
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
