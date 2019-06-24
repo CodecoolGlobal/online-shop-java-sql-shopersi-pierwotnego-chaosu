@@ -1,0 +1,3 @@
+1. Show shop
+2. Zakupy
+0. EXIT
