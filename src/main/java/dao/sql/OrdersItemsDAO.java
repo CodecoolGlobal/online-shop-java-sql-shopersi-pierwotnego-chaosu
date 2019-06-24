@@ -1,33 +1,33 @@
 package dao.sql;
 
+import model.shop.OrdersItems;
 import model.shop.Product;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ProductDAO implements DAO {
+public class OrdersItemsDAO implements DAO {
     public void create() {
 
     }
 
-    public ArrayList<Product> read(){
+    public ArrayList<OrdersItems> read(){
         Connection c = null;
-        ArrayList<Product> list = new ArrayList<Product>();
+        ArrayList<OrdersItems> list = new ArrayList<OrdersItems>();
         try {
             DataSource ds = new DataSource();
-            ResultSet rs = ds.executeQuery("SELECT * FROM PRODUCTS;");
+            ResultSet rs = ds.executeQuery("SELECT * FROM ORDERS_ITEMS;");
             while(rs.next()){
                 int id = rs.getInt("id");
-                String name = rs.getString("name");
-                float price = rs.getFloat("price");
+                int orderId = rs.getInt("orderId");
+                int itemId = rs.getInt("itemId");
                 int amount = rs.getInt("amount");
-                boolean isAvailable = (rs.getInt("isAvailable") != 0);
-                int category = (rs.getInt("categoryId"));
+                float price = rs.getFloat("price");
 
-                list.add((new Product(id, name, price, amount, isAvailable, category)));
+                list.add((new OrdersItems(id, orderId, itemId, amount, price)));
             }
-            ds.close();
+            rs.close();
 
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
