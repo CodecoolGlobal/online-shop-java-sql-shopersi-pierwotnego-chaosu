@@ -5,8 +5,7 @@ import view.Display;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class LogInController {
-
+public class AdminController {
 
     public void run() {
 
@@ -18,7 +17,7 @@ public class LogInController {
         while (isRunning) {
 
             Display.clearScreen();
-            Display.showMenu("logMenu");
+            Display.showMenu("customerMenu");
 
 
             switch (scanner.nextInt()) {
@@ -26,11 +25,7 @@ public class LogInController {
                 case 1: {
 
                     Display.clearScreen();
-//                    System.out.println("TROLLOO");
-                    CustomerController customerControler = new CustomerController();
-                    customerControler.run();
-
-
+                    System.out.println("ADMIN");
                     try {
                         System.in.read();
                     } catch (IOException e) {
@@ -42,8 +37,6 @@ public class LogInController {
                 case 2: {
 
                     Display.clearScreen();
-                    AdminController adminController = new AdminController();
-                    adminController.run();
                     try {
                         System.in.read();
                     } catch (IOException e) {
@@ -63,6 +56,4 @@ public class LogInController {
             }
         }
     }
-
-
 }
