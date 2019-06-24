@@ -1,10 +1,10 @@
 package dao.sql;
 
 import model.shop.OrdersItems;
+import model.shop.Product;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class OrdersItemsDAO implements DAO {

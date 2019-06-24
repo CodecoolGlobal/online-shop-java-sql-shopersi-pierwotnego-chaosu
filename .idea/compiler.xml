@@ -10,8 +10,8 @@
         <module name="TW" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="onlineshop" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="onlineshop" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
