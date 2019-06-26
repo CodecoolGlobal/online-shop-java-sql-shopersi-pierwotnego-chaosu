@@ -5,16 +5,42 @@ import model.shop.Product;
 import model.shop.User;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class UsersDAO implements DAO {
 
     public void create() {
-
     }
 
-    public ArrayList<User> read(){
+    public void create(User user) {
+
+        try
+        {
+            Connection c = new DataSource().getConnection();
+
+            String query = " insert into users (name, isAdmin, password)"
+                    + " values (?, ?, ?)";
+
+            PreparedStatement preparedStmt = c.prepareStatement(query);
+            preparedStmt.setString(1, user.getName());
+            preparedStmt.setInt(2, user.getAdmin());
+            preparedStmt.setString(3, user.getPassowrd());
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+            c.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+    }
+
+        public ArrayList<User> read(){
         Connection c = null;
         ArrayList<User> list = new ArrayList<User>();
         try {
@@ -43,13 +69,13 @@ public class UsersDAO implements DAO {
     }
 
 
-    public User readUser(String userName, String userPassword){
+    public User readUser(String userName){
         Connection c = null;
         User newUser = new User();
         try {
             DataSource ds = new DataSource();
-            ResultSet rs = ds.executeQuery("SELECT * FROM USERS WHERE \"name\" LIKE '"+userName+"' AND \"password\" LIKE '"+userPassword+"';");
-            if (rs.next()) {
+            ResultSet rs = ds.executeQuery("SELECT * FROM USERS WHERE \"name\" LIKE '"+userName+"';");
+            if (rs.next() && rs.getString("name").equals(userName)) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String password = rs.getString("password");
