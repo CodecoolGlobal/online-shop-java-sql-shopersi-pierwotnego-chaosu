@@ -5,13 +5,12 @@ import dao.sql.ProductDAO;
 public class Product {
     private int id;
     private String name;
-    private float price;
+    private double price;
     private int amount;
     private boolean isAvailable;
     private int category;
 
-    public Product(int id, String name, float price, int amount, boolean isAvailable, int category) {
-        this.id = id;
+    public Product(String name, double price, int amount, boolean isAvailable, int category) {
         this.name = name;
         this.price = price;
         this.amount = amount;
@@ -27,7 +26,7 @@ public class Product {
         return name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -41,6 +40,10 @@ public class Product {
 
     public int getCategory() {
         return category;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     public void setName(String name) {

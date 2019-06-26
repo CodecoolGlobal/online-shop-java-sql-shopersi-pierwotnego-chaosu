@@ -7,9 +7,37 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ProductDAO implements DAO {
-    public void create() {
+    public void create(){};
+
+    public void create(Product product) {
+
+        try
+        {
+            Connection c = new DataSource().getConnection();
+
+            String query = " insert into products (name, price, amount, isAvailable, categoryId)"
+                    + " values (?, ?, ?, ?, ?)";
+
+            PreparedStatement preparedStmt = c.prepareStatement(query);
+            preparedStmt.setString(1, product.getName());
+            preparedStmt.setDouble(2, product.getPrice());
+            preparedStmt.setInt(3, product.getAmount());
+            preparedStmt.setInt(4, product.isAvailable() ? 1 : 0);
+            preparedStmt.setInt(5, product.getCategory());
+
+            // execute the preparedstatement
+            preparedStmt.execute();
+
+            c.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
 
     }
 
@@ -22,12 +50,13 @@ public class ProductDAO implements DAO {
             while(rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                float price = rs.getFloat("price");
+                double price = rs.getDouble("price");
                 int amount = rs.getInt("amount");
                 boolean isAvailable = (rs.getInt("isAvailable") != 0);
                 int category = (rs.getInt("categoryId"));
-
-                list.add((new Product(id, name, price, amount, isAvailable, category)));
+                Product product = new Product(name, price, amount, isAvailable, category);
+                product.setId(id);
+                list.add(product);
             }
             ds.close();
 
@@ -52,7 +81,7 @@ public class ProductDAO implements DAO {
             PreparedStatement preparedStmt = c.prepareStatement(query);
 
             preparedStmt.setString(1, product.getName());
-            preparedStmt.setFloat(2, product.getPrice());
+            preparedStmt.setDouble(2, product.getPrice());
             preparedStmt.setInt(3, product.getAmount());
             preparedStmt.setInt(4, available);
             preparedStmt.setInt(5, product.getCategory());
