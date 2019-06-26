@@ -1,5 +1,7 @@
 package model.shop;
 
+import dao.sql.ProductDAO;
+
 public class Product {
     private int id;
     private String name;
@@ -43,23 +45,32 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+//        update();
     }
 
     public void setPrice(float price) {
         this.price = price;
+//        update();
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
+//        update();
         if (this.amount <= 0) setAvailable(false);
     }
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+//        update();
     }
 
     public void setCategory(int category) {
         this.category = category;
+//        update();
+    }
+
+    public void update(){
+        new ProductDAO().update(this);
     }
 
     @Override
@@ -67,10 +78,10 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", price=" + price +
-//                ", amount=" + amount +
-//                ", isAvailable=" + isAvailable +
-//                ", category=" + category +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", isAvailable=" + isAvailable +
+                ", category=" + category +
                 '}';
     }
 }
