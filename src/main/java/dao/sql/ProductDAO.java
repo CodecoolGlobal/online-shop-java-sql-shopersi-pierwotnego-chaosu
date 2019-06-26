@@ -75,4 +75,19 @@ public class ProductDAO implements DAO {
 
     }
 
+    public void delete(Product product) {
+        Connection c = new DataSource().getConnection();
+        try
+        {
+
+            PreparedStatement st = c.prepareStatement("DELETE FROM products WHERE id = " + product.getId() + ";");
+            st.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+
+    }
+
 }

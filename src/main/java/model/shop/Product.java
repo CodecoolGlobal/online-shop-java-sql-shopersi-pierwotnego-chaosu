@@ -73,6 +73,10 @@ public class Product {
         new ProductDAO().update(this);
     }
 
+    public void delete(){
+        new ProductDAO().delete(this);
+    }
+
     @Override
     public String toString() {
         return "Product{" +
