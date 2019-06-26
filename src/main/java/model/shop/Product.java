@@ -80,6 +80,10 @@ public class Product {
         new ProductDAO().delete(this);
     }
 
+    public void create(){
+        new ProductDAO().create(this);
+    }
+
     @Override
     public String toString() {
         return "Product{" +
