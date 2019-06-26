@@ -45,28 +45,28 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-//        update();
+        update();
     }
 
     public void setPrice(float price) {
         this.price = price;
-//        update();
+        update();
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
-//        update();
+        update();
         if (this.amount <= 0) setAvailable(false);
     }
 
     public void setAvailable(boolean available) {
         isAvailable = available;
-//        update();
+        update();
     }
 
     public void setCategory(int category) {
         this.category = category;
-//        update();
+        update();
     }
 
     public void update(){
