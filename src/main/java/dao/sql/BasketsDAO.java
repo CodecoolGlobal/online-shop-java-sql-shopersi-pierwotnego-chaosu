@@ -33,8 +33,9 @@ public class BasketsDAO implements DAO {
                     int amount = rs.getInt("amount");
                     boolean isAvailable = (rs.getInt("isAvailable") != 0);
                     int category = (rs.getInt("categoryId"));
-
-                    list.add((new Product(id, name, price, amount, isAvailable, category)));
+                    Product product = new Product(name, price, amount, isAvailable, category);
+                    product.setId(id);
+                    list.add(product);
                 }
             ds.close();
             }
