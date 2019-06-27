@@ -1,5 +1,6 @@
 package controler;
 
+import model.shop.Product;
 import model.shop.User;
 import view.Display;
 
@@ -22,21 +23,16 @@ public class AdminController {
         while (isRunning) {
 
             Display.clearScreen();
-            Display.showMenu("customerMenu");
+            Display.showMenu("adminMenu");
 
 
             switch (scanner.nextInt()) {
 
                 case 1: {
 
-                    Display.clearScreen();
-                    System.out.println("ADMIN");
-                    try {
-                        System.in.read();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                    Product product = new Product("kkkkkaaa", 12, 12, true,1);
+                    product.create();
+
                 }
 
                 case 2: {

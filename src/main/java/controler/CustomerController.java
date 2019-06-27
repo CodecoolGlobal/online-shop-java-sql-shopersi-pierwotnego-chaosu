@@ -1,6 +1,7 @@
 package controler;
 
 
+import model.shop.Basket;
 import model.shop.Customer;
 import model.shop.User;
 import view.Display;
@@ -11,10 +12,9 @@ import java.util.Scanner;
 public class CustomerController {
     private User user;
 
-    public CustomerController(User user){
+    public CustomerController(User user) {
         this.user = user;
     }
-
 
 
     public void run() {
@@ -36,25 +36,24 @@ public class CustomerController {
 
                     Display.clearScreen();
                     System.out.println("CUSTOMER");
-                    try {
-                        System.in.read();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Display.prompt();
                     break;
                 }
 
                 case 2: {
 
                     Display.clearScreen();
-                    try {
-                        System.in.read();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Display.prompt();
                     break;
                 }
-
+                case 3: {
+                    Basket basket = new Basket(user.getId());
+                    basket.setBasketFromDB();
+                    System.out.println(basket);
+                    Display.printBasket(basket);
+                    Display.prompt();
+                    break;
+                }
                 case 0: {
                     isRunning = false;
                     break;
