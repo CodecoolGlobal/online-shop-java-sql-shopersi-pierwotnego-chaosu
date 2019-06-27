@@ -44,7 +44,8 @@ public class CustomerController {
                 case 1: {
 
                     Display.clearScreen();
-                    System.out.println(this.productList);
+//                    System.out.println(this.productList);
+                    Display.printProductTable(productList);
                     Display.prompt();
                     break;
                 }
