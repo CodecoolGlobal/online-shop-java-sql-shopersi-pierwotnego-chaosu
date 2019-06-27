@@ -4,5 +4,6 @@
 4. Edit basket
 5. Remove product
 6. Place order
-7. Show orders
+7. Show
+8. Set Basket fro db
 0. EXIT

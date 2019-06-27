@@ -1,19 +1,26 @@
 package controler;
 
 
+import dao.sql.ProductDAO;
 import model.shop.Basket;
 import model.shop.Customer;
 import model.shop.User;
+import model.shop.lists.ProductList;
 import view.Display;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class CustomerController {
+
     private User user;
+    private Basket basket;
+    private ProductList productList;
 
     public CustomerController(User user) {
         this.user = user;
+        this.basket = new Basket(user.getId());
+        this.productList = new ProductList(new ProductDAO().read());
     }
 
 
@@ -26,6 +33,8 @@ public class CustomerController {
 
         while (isRunning) {
 
+
+
             Display.clearScreen();
             Display.showMenu("customerMenu");
 
@@ -35,23 +44,23 @@ public class CustomerController {
                 case 1: {
 
                     Display.clearScreen();
-                    System.out.println("CUSTOMER");
+                    System.out.println(this.productList);
                     Display.prompt();
                     break;
                 }
 
                 case 2: {
-
-                    Display.clearScreen();
+                    basket.addProduct(1,this.productList.getProducts());
                     Display.prompt();
                     break;
                 }
                 case 3: {
-                    Basket basket = new Basket(user.getId());
-                    basket.setBasketFromDB();
-                    System.out.println(basket);
                     Display.printBasket(basket);
                     Display.prompt();
+                    break;
+                }
+                case 8: {
+                    basket.setBasketFromDB();
                     break;
                 }
                 case 0: {
