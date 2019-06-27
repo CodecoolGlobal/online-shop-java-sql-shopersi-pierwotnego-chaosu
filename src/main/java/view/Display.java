@@ -18,78 +18,66 @@ public class Display {
     }
 
     public static void printBasket(Basket basket) {
+
         HashMap<Product, Integer> basketM = basket.getProducts();
+
         Set<Product> keyS = basketM.keySet();
 
-        int form1 = 0;
-        int form2 = 0;
-        int form3 = 0;
+        int form1 = "Product ID".length();
+        int form2 = "Name".length();
+        int form3 = "Quantity".length();
 
 
-
-
-
-        for (Product prod: keyS) {
+        for (Product prod : keyS) {
 
             int form1a = String.valueOf(prod.getId()).length();
             int form2a = prod.getName().length();
             int form3a = String.valueOf(basketM.get(prod)).length();
 
-            if (form1<=form1a) form1 = form1a;
-            if (form2<=form2a) form2 = form2a;
-            if (form3<=form3a) form3 = form3a;
+            if (form1 <= form1a) form1 = form1a;
+            if (form2 <= form2a) form2 = form2a;
+            if (form3 <= form3a) form3 = form3a;
 
         }
-        System.out.println("\n");
-        System.out.println("form1 = "+form1);
-        System.out.println("form2 = "+form2);
-        System.out.println("form3 = "+form3+"\n");
 
 
+        String formater1 = "%" + form1 + "s";
+        String formater2 = "%" + form2 + "s";
+        String formater3 = "%" + form3 + "s";
 
 
-        String formater1 = "%"+form1+1+"s";
-        String formater2 = "%"+form3+1+"s";
-        String formater3 = "%"+form3+1+"s";
-        String formater4 = "%15s";
-        String doubleF = "%.3f";
-        String output ="";
-        output += "┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────┐\n";
+        String output = "";
 
-        String prodIdH = String.format(formater1,"Product ID");
+
+        String l1 = multi(form1, "─");
+        String l2 = multi(form2, "─");
+        String l3 = multi(form3, "─");
+
+
+        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┐\n";
+
+
+        String prodIdH = String.format(formater1, "Product ID");
         String prodNameH = String.format(formater2, "Name");
-        String prodQuantityH = String.format(formater3,"Quantity");
+        String prodQuantityH = String.format(formater3, "Quantity");
 
-        output += "│"+prodIdH+"│"+prodNameH+"│"+prodQuantityH+"│\n";
+        output += "│" + prodIdH + "│" + prodNameH + "│" + prodQuantityH + "│\n";
 
-        for (Product product:basketM.keySet()) {
+        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┤\n";
 
-            String prodId = String.format(formater1,product.getId());
+
+        for (Product product : keyS) {
+
+            String prodId = String.format(formater1, product.getId());
             String prodName = String.format(formater2, product.getName());
             String prodQuantity = String.format(formater3, String.valueOf(basketM.get(product)));
-            output += "│"+prodId+"│"+prodName+"│"+prodQuantity+"│\n";
-
-
-
-
+            output += "│" + prodId + "│" + prodName + "│" + prodQuantity + "│\n";
 
         }
+        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┘\n";
+
+
         System.out.print(output);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -106,6 +94,15 @@ public class Display {
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    private static String multi(int occ, String sign) {
+        String out = "";
+
+        for (int i = 0; i < occ; i++) {
+            out += sign;
+        }
+        return out;
     }
 }
 
