@@ -8,3 +8,4 @@ target/
 .classpath
 launch.json
 src/main/resources/onlineshop.db
+sqlite-jdbc-3.7.2.jar

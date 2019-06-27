@@ -1,3 +1,9 @@
-1. Show shop
-2. Zakupy
+1. Show products
+2. Add to basket
+3. Show Basket
+4. Edit basket
+5. Remove product
+6. Place order
+7. Show
+8. Set Basket fro db
 0. EXIT

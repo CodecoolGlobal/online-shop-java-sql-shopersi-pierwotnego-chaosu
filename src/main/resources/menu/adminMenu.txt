@@ -1,3 +1,5 @@
-1. AAAAAAAA
+1. Add product to list
+2. Delete product
+3. Update product
 2. BBBBBBBBBBBB
 0. EXIT

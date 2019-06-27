@@ -89,10 +89,10 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", isAvailable=" + isAvailable +
-                ", category=" + category +
+//                ", price=" + price +
+//                ", amount=" + amount +
+//                ", isAvailable=" + isAvailable +
+//                ", category=" + category +
                 '}';
     }
 }
