@@ -3,7 +3,7 @@ package view;
 import model.controller.FileReaderForDispaly;
 import model.shop.Basket;
 import model.shop.Product;
-import model.shop.lists.ProductList;
+import model.shop.abc.ProductList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,7 +102,7 @@ public class Display {
             int form2a = prod.getName().length();
             int form3a = String.valueOf(prod.getPrice()).length();
             int form4a = String.valueOf(prod.getAmount()).length();
-            int form5a = String.valueOf(prod.getCategory()).length();
+            int form5a = String.valueOf(prod.getCategoryName()).length();
 
             if (form1 <= form1a) form1 = form1a;
             if (form2 <= form2a) form2 = form2a;
@@ -147,7 +147,7 @@ public class Display {
             String prodName = String.format(formater2, product.getName());
             String prodPrice = String.format(formater3, product.getPrice());
             String prodAmount = String.format(formater4, product.getAmount());
-            String prodCategory = String.format(formater5, product.getCategory());
+            String prodCategory = String.format(formater5, product.getCategoryName());
 
             output += "│" + prodId + "│" + prodName + "│" + prodPrice +"│"+ prodAmount +"│"+ prodCategory+"│\n";
 

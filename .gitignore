@@ -9,3 +9,6 @@ target/
 launch.json
 src/main/resources/onlineshop.db
 
+.idea/compiler.xml
+.idea/compiler.xml
+.idea/codeStyles/Project.xml
