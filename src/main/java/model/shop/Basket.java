@@ -17,16 +17,16 @@ public class Basket {
     }
 
 
-    public void addProduct(int prodId, ArrayList<Product> productList) {
+    public void addProductToBasket(int prodId, ArrayList<Product> productList, int quantity) {
 
         for (Product prod : productList) {
             if (prodId == prod.getId()) {
 
                 if (products.containsKey(prod)) {
                     int count = products.get(prod);
-                    count++;
+                    count+= quantity;
                     products.replace(prod, count);
-                } else products.put(prod, 1);
+                } else products.put(prod, quantity);
             }
 
         }
@@ -41,8 +41,6 @@ public class Basket {
         BasketService basketService = new BasketService(this.userId);
         basketService.setProductsFromDB();
         this.products = basketService.getBasket().get(0);
-
-
     }
 
     public HashMap<Product, Integer> getProducts() {
