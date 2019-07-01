@@ -1,4 +1,4 @@
-package model.shop.lists;
+package model.shop.abc;
 
 import model.shop.Product;
 

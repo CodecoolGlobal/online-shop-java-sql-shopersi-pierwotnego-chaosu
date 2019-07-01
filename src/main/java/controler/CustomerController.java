@@ -3,12 +3,11 @@ package controler;
 
 import dao.sql.ProductDAO;
 import model.shop.Basket;
-import model.shop.Customer;
 import model.shop.User;
-import model.shop.lists.ProductList;
+
+import model.shop.abc.ProductList;
 import view.Display;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class CustomerController {
@@ -44,19 +43,26 @@ public class CustomerController {
                 case 1: {
 
                     Display.clearScreen();
-//                    System.out.println(this.productList);
                     Display.printProductTable(productList);
                     Display.prompt();
                     break;
                 }
 
                 case 2: {
-//                    basket.addProduct(1,this.productList.getProducts());
-                    Display.prompt();
+                    Display.clearScreen();
+                    Display.printProductTable(productList);
+                    addProdToB();
+
                     break;
                 }
                 case 3: {
                     Display.printBasket(basket);
+                    Display.prompt();
+                    break;
+                }
+                case 4: {
+                    Display.printBasket(basket);
+                    editBasket();
                     Display.prompt();
                     break;
                 }
@@ -69,11 +75,37 @@ public class CustomerController {
                     break;
                 }
                 default: {
-//                    Display.clearScreen();
                 }
 
             }
         }
+    }
+
+    private void editBasket() {
+
+
+
+
+    }
+
+    private void addProdToB(){
+        boolean isAsking = true;
+        while (isAsking) {
+
+            int prodId = Display.askForInt("Select productID");
+            boolean isValid = productList.isIdValid(prodId);
+
+            if (isValid){
+                int quantity = Display.askForInt("How many Items?");
+
+
+                basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
+                isAsking = false;
+
+            } else System.out.println( "Incorrect Id");
+
+        }
+        Display.prompt();
     }
 
 }
