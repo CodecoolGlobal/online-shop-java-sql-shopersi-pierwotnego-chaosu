@@ -1,13 +1,14 @@
 package model.shop;
 
+import dao.sql.CategoryDAO;
+
 import java.util.ArrayList;
 
 public class Category {
     private int id;
     private String name;
 
-    public Category(int id, String name) {
-        this.id = id;
+    public Category(String name) {
         this.name = name;
 
     }
@@ -26,7 +27,20 @@ public class Category {
     @Override
     public String toString() {
         return "Category{" +
-                "name='" + name + '\'' +
+                "id= " + id +
+                ", name='" + name + '\'' +
                 '}';
+    }
+
+    public void createInDB(){
+        new CategoryDAO().create(this);
+    }
+
+    public void updateInDB(){
+        new CategoryDAO().update(this);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

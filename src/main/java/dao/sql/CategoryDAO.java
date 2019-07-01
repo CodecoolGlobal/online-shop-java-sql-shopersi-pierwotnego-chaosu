@@ -3,6 +3,8 @@ package dao.sql;
 import model.shop.Category;
 import model.shop.Product;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +18,8 @@ public class CategoryDAO {
             while(rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                Category category = new Category(id, name);
+                Category category = new Category(name);
+                category.setId(id);
                 list.add(category);
             }
 
@@ -25,6 +28,47 @@ public class CategoryDAO {
             System.exit(0);
         }
         return list;
+    }
+
+
+    public void create(Category category){
+
+        try (Connection c = new DataSource().getConnection()) {
+            String query = " insert into categories (name)"
+                    + " values (?)";
+
+            PreparedStatement preparedStmt = c.prepareStatement(query);
+            preparedStmt.setString(1, category.getName());
+
+            preparedStmt.execute();
+
+        } catch (SQLException e) {
+            System.err.println("SQL exception when creating. ");
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void update(Category category) {
+        try (Connection c = new DataSource().getConnection())
+        {
+
+            String query = "UPDATE categories SET name = ? WHERE id = ?";
+            PreparedStatement preparedStmt = c.prepareStatement(query);
+
+            preparedStmt.setString(1, category.getName());
+            preparedStmt.setInt(2, category.getId());
+
+            preparedStmt.executeUpdate();
+
+        }
+        catch (SQLException e)
+        {
+            System.err.println("SQL exception when updating. ");
+            System.err.println(e.getMessage());
+        }
+
     }
 
 

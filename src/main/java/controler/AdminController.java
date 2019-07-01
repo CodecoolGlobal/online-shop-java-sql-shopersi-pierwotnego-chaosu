@@ -1,8 +1,10 @@
 package controler;
 
 import dao.sql.ProductDAO;
+import model.shop.Category;
 import model.shop.Product;
 import model.shop.User;
+import model.shop.lists.CategoryList;
 import model.shop.lists.ProductList;
 import view.Display;
 
@@ -19,39 +21,50 @@ public class AdminController {
     }
 
     public void run() {
-
         boolean isRunning = true;
-
         Scanner scanner = new Scanner(System.in);
-
-
         while (isRunning) {
-
             Display.clearScreen();
             Display.showMenu("adminMenu");
-
             this.productList = new ProductList(new ProductDAO().read());
             switch (scanner.nextInt()) {
 
-                case 1: {
+                case 2: {
                     addNewProduct();
                     break;
                 }
 
-                case 2: {
+                case 3: {
                     editProduct();
                     break;
                 }
 
-                case 3: {
+                case 4: {
                     deactivateAProduct();
                     break;
                 }
 
-                case 4: {
+                case 1: {
 
                     Display.clearScreen();
                     Display.printProductTable(productList);
+                    break;
+                }
+
+                case 5: {
+
+                    Display.clearScreen();
+                    showCategories();
+                    break;
+                }
+
+                case 6: {
+                    addNewCategory();
+                    break;
+                }
+
+                case 7: {
+                    editCategory();
                     break;
                 }
 
@@ -125,6 +138,32 @@ public class AdminController {
             product.setAvailable(!product.isAvailable());
             product.update();
         }
+    }
+
+    private void showCategories(){
+        System.out.println(new CategoryList());
+    }
+
+    private void addNewCategory(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Category name: ");
+        String name = scanner.nextLine();
+        Category category = new Category(name);
+        category.createInDB();
+    }
+
+    private void editCategory(){
+        showCategories();
+        CategoryList list = new CategoryList();
+        Scanner sc1 = new Scanner(System.in);
+        System.out.print("Category id: ");
+        int id = sc1.nextInt();
+        Category category = list.getCategoryById(id);
+        System.out.print("\nChange " + category.getName()  +" into: ");
+        Scanner sc2 = new Scanner(System.in);
+        String name = sc2.nextLine();
+        category.setName(name);
+        category.updateInDB();
     }
 
 }
