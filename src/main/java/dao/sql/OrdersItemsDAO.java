@@ -44,11 +44,11 @@ public class OrdersItemsDAO implements DAO {
 
         HashMap<Product, Integer> basketMap = basket.getProducts();
         for (Product product : basketMap.keySet()) {
-            int available = product.isAvailable() ? 1 : 0;
+//            int available = product.isAvailable() ? 1 : 0;
 //            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
             try (Connection c = new DataSource().getConnection()) {
-                String query = " insert into orders_items (id, orderId, itemId, amount , price)"
-                        + " values (?, ?, ?, ?, ?)";
+                String query = " insert into orders_items (orderId, itemId, amount , price)"
+                        + " values (?, ?, ?, ?)";
 
                 PreparedStatement preparedStmt = c.prepareStatement(query);
                 preparedStmt.setInt(1, order.getId());

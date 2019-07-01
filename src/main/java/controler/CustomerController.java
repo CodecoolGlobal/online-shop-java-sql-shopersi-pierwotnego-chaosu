@@ -66,6 +66,7 @@ public class CustomerController {
                 }
                 case 6: {
                     new OrdersDAO().create(user);
+                    newOrder = new OrdersDAO().readOrders(user).get(0);
                     new OrdersItemsDAO().create(basket,newOrder);
                     break;
                 }

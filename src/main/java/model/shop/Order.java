@@ -20,6 +20,7 @@ public class Order {
     public void setId(int id) {
         this.id = id;
     }
+
     public int getId() {
         return id;
     }
@@ -47,13 +48,16 @@ public class Order {
     public void setStatusAsDelivered() {
         this.status = "Delivered";
     }
-
     public void makeNewOrder(User user, Basket basket){
         new OrdersDAO().create(user);
     }
 
     public void makeOrderedItemsList(Basket basket){
             this.orderItemsList = basket.getProducts();}
+
+    public HashMap<Product, Integer> getOrderItemsList() {
+        return orderItemsList;
+    }
 
 
 
