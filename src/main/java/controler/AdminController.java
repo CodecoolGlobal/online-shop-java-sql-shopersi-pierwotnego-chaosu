@@ -38,8 +38,13 @@ public class AdminController {
                     break;
                 }
 
-                case 3: {
+                case 2: {
                     editProduct();
+                    break;
+                }
+
+                case 3: {
+                    deactivateAProduct();
                     break;
                 }
 
@@ -63,7 +68,7 @@ public class AdminController {
     }
 
 
-    public void addNewProduct(){
+    private void addNewProduct(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Product name: ");
         String name = scanner.nextLine();
@@ -78,7 +83,7 @@ public class AdminController {
         product.create();
         }
 
-    public void editProduct(){
+    private void editProduct(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Product id: ");
         int id = scanner.nextInt();
@@ -107,6 +112,17 @@ public class AdminController {
 
             if (!categoryId.equals("")) product.setCategory(Integer.valueOf(categoryId));
 
+            product.update();
+        }
+    }
+
+    private void deactivateAProduct(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Product id: ");
+        int id = sc.nextInt();
+        if (productList.isIdValid(id)){
+            Product product = productList.getProductById(id);
+            product.setAvailable(!product.isAvailable());
             product.update();
         }
     }
