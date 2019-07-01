@@ -35,10 +35,11 @@ public class AdminController {
 
                 case 1: {
                     addNewProduct();
+                    break;
                 }
 
-                case 2: {
-
+                case 3: {
+                    editProduct();
                     break;
                 }
 
@@ -67,7 +68,6 @@ public class AdminController {
         System.out.print("Product name: ");
         String name = scanner.nextLine();
         System.out.print("\nProduct price: ");
-        System.out.print("\nProduct price: ");
         double price = scanner.nextDouble();
         System.out.print("\nAmount: ");
         int amount = scanner.nextInt();
@@ -78,5 +78,37 @@ public class AdminController {
         product.create();
         }
 
+    public void editProduct(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Product id: ");
+        int id = scanner.nextInt();
+        if (productList.isIdValid(id)){
+
+            Scanner sc2 = new Scanner(System.in);
+            Product product = productList.getProductById(id);
+
+            System.out.print("New product name: ");
+            String name = sc2.nextLine();
+
+            if (!name.equals("")) product.setName(name);
+
+            System.out.print("\nNew product price: ");
+            String price = sc2.nextLine();
+
+            if (!price.equals("")) product.setPrice(Double.valueOf(price));
+
+            System.out.print("\nNew amount: ");
+            String amount = sc2.nextLine();
+
+            if (!amount.equals("")) product.setAmount(Integer.valueOf(amount));
+
+            System.out.print("\nNew category id: ");
+            String categoryId = sc2.nextLine();
+
+            if (!categoryId.equals("")) product.setCategory(Integer.valueOf(categoryId));
+
+            product.update();
+        }
+    }
 
 }

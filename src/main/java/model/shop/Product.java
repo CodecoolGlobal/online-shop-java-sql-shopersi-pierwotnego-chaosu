@@ -51,7 +51,7 @@ public class Product {
 //        update();
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
 //        update();
     }
