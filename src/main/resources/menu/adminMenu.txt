@@ -1,9 +1,5 @@
-1. Show products
-2. Create new product
+1. Add product to list
+2. Delete product
 3. Update product
-4. Activate/deactivate product
-5. Show categories
-6. Add new category
-7. Rename category
-8. Remove category
-0. LOGOUT
+4. Show products
+0. EXIT

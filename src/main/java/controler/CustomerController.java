@@ -51,7 +51,7 @@ public class CustomerController {
                 case 2: {
                     Display.clearScreen();
                     Display.printProductTable(productList);
-//                    addProdToB();
+                    addProdToB();
 
                     break;
                 }
@@ -88,24 +88,24 @@ public class CustomerController {
 
     }
 
-//    private void addProdToB(){
-//        boolean isAsking = true;
-//        while (isAsking) {
-//
-//            int prodId = Display.askForInt("Select productID");
-//            boolean isValid = productList.isIdValid(prodId);
-//
-//            if (isValid){
-//                int quantity = Display.askForInt("How many Items?");
-//
-//
-//                basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
-//                isAsking = false;
-//
-//            } else System.out.println( "Incorrect Id");
-//
-//        }
-//        Display.prompt();
-//    }
+    private void addProdToB(){
+        boolean isAsking = true;
+        while (isAsking) {
+
+            int prodId = Display.askForInt("Select productID");
+            boolean isValid = productList.isIdValid(prodId);
+
+            if (isValid){
+                int quantity = Display.askForInt("How many Items?");
+
+
+                basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
+                isAsking = false;
+
+            } else System.out.println( "Incorrect Id");
+
+        }
+        Display.prompt();
+    }
 
 }
