@@ -1,6 +1,8 @@
 package controler;
 
 
+import dao.sql.OrdersDAO;
+import dao.sql.OrdersItemsDAO;
 import dao.sql.ProductDAO;
 import model.shop.Basket;
 import model.shop.Customer;
@@ -63,6 +65,8 @@ public class CustomerController {
                     break;
                 }
                 case 6: {
+                    new OrdersDAO().create(user);
+                    new OrdersItemsDAO().create(basket,newOrder);
                     break;
                 }
                 case 8: {

@@ -17,9 +17,9 @@ public class OrdersDAO implements DAO {
     public void create() {
     }
 
-    public void create(User user, Basket basket) {
+    public void create(User user) {
 
-        Order newOrder = new Order(basket);
+        Order newOrder = new Order();
         newOrder.setStatusAsSubmit();
         try
         {
@@ -45,18 +45,18 @@ public class OrdersDAO implements DAO {
         }
     }
 
-    public ArrayList<Order> readOrders(User user, Basket basket){
+    public ArrayList<Order> readOrders(User user){
         Connection c = null;
         ArrayList<Order> list = new ArrayList<Order>();
         DataSource ds = new DataSource();
-        try (ResultSet rs = ds.executeQuery("SELECT * FROM ORDERS;")){
+        try (ResultSet rs = ds.executeQuery("SELECT * FROM ORDERS WHERE \"userId\" LIKE '"+user.getId()+"';" )){
             while(rs.next()){
                 int id = rs.getInt("id");
                 int userId = rs.getInt("userId");
                 String status = rs.getString("status");
                 String date = rs.getString("date");
 
-                Order newOrder = new Order(basket);
+                Order newOrder = new Order();
                 newOrder.setId(id);
                 newOrder.setUserId(userId);
                 newOrder.setStatusAsSubmit();
@@ -79,9 +79,31 @@ public class OrdersDAO implements DAO {
 
     }
 
-    public void update() {
+    public void update(User user, Order order) {
+
+//        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
+        try (Connection c = new DataSource().getConnection())
+        {
+
+            String query = "UPDATE orders SET status = ? WHERE id = ?";
+            PreparedStatement preparedStmt = c.prepareStatement(query);
+
+            preparedStmt.setInt(1, user.getId());
+            preparedStmt.setString(2, order.getStatus());
+            preparedStmt.setString(3, order.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
+
+            preparedStmt.executeUpdate();
+
+        }
+        catch (SQLException e)
+        {
+            System.err.println("SQL exception when updating. ");
+            System.err.println(e.getMessage());
+        }
 
     }
+    public void update() {}
 
     public void delete() {
 

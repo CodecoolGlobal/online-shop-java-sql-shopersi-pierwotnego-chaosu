@@ -16,10 +16,6 @@ public class Order {
     private HashMap<Product, Integer> orderItemsList;
 
 
-    public Order (Basket basket) {
-        this.orderItemsList = basket.getProducts();
-    }
-
 
     public void setId(int id) {
         this.id = id;
@@ -53,8 +49,12 @@ public class Order {
     }
 
     public void makeNewOrder(User user, Basket basket){
-        new OrdersDAO().create(user, basket);
+        new OrdersDAO().create(user);
     }
+
+    public void makeOrderedItemsList(Basket basket){
+            this.orderItemsList = basket.getProducts();}
+
 
 
 

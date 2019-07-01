@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class OrdersItemsDAO implements DAO {
 
 
-    public ArrayList<OrderItem> readItemsFromOrder(Order order){
+    public ArrayList<OrderItem> read(Order order){
         Connection c = null;
         ArrayList<OrderItem> list = new ArrayList<OrderItem>();
         try {
@@ -40,12 +40,12 @@ public class OrdersItemsDAO implements DAO {
     }
 
 
-    public void createItemsForOrder(Basket basket, Order order) {
+    public void create(Basket basket, Order order) {
 
         HashMap<Product, Integer> basketMap = basket.getProducts();
         for (Product product : basketMap.keySet()) {
             int available = product.isAvailable() ? 1 : 0;
-            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
+//            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
             try (Connection c = new DataSource().getConnection()) {
                 String query = " insert into orders_items (id, orderId, itemId, amount , price)"
                         + " values (?, ?, ?, ?, ?)";
