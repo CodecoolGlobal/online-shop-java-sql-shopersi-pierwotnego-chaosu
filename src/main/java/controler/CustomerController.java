@@ -51,7 +51,7 @@ public class CustomerController {
                 }
 
                 case 2: {
-                    basket.addProduct(1,this.productList.getProducts());
+//                    basket.addProduct(1,this.productList.getProducts());
                     Display.prompt();
                     break;
                 }
