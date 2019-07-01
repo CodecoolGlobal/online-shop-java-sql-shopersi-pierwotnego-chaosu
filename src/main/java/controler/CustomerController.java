@@ -98,9 +98,11 @@ public class CustomerController {
             if (isValid){
                 int quantity = Display.askForInt("How many Items?");
 
+                if (quantity>0 && quantity<= productList.getProductById(prodId).getAmount()){
 
-                basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
-                isAsking = false;
+                    basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
+                    isAsking = false;
+                } else System.out.println("r Amount");
 
             } else System.out.println( "Incorrect Id");
 

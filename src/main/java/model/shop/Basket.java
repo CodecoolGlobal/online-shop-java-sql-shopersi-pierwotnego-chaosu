@@ -2,9 +2,8 @@ package model.shop;
 
 import services.BasketService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.List;
 
 public class Basket {
     private int userId;
@@ -17,7 +16,7 @@ public class Basket {
     }
 
 
-    public void addProductToBasket(int prodId, ArrayList<Product> productList, int quantity) {
+    public void addProductToBasket(int prodId, List<Product> productList, int quantity) {
 
         for (Product prod : productList) {
             if (prodId == prod.getId()) {

@@ -1,6 +1,7 @@
 package model.shop;
 
 import dao.sql.ProductDAO;
+import model.shop.lists.CategoryList;
 
 public class Product {
     private int id;
@@ -42,6 +43,10 @@ public class Product {
         return category;
     }
 
+    public String getCategoryName(){
+        return new CategoryList().getCategoryNameById(this.category);
+    }
+
     public void setId(int id){
         this.id = id;
     }
@@ -51,7 +56,7 @@ public class Product {
 //        update();
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
 //        update();
     }
