@@ -1,6 +1,7 @@
 package model.shop;
 
 import dao.sql.ProductDAO;
+import model.shop.lists.CategoryList;
 
 public class Product {
     private int id;
@@ -43,34 +44,38 @@ public class Product {
         return category;
     }
 
+    public String getCategoryName(){
+        return new CategoryList().getCategoryNameById(this.category);
+    }
+
     public void setId(int id){
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
-        update();
+//        update();
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
-        update();
+//        update();
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
-        update();
+//        update();
         if (this.amount <= 0) setAvailable(false);
     }
 
     public void setAvailable(boolean available) {
         isAvailable = available;
-        update();
+//        update();
     }
 
     public void setCategory(int category) {
         this.category = category;
-        update();
+//        update();
     }
 
     public void update(){

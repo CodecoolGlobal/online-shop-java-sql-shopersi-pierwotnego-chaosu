@@ -8,6 +8,7 @@ import model.shop.lists.ProductList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class Display {
@@ -86,7 +87,7 @@ public class Display {
 
     public static void printProductTable(ProductList products){
 
-        ArrayList<Product> productList = products.getProducts();
+        List<Product> productList = products.getProducts();
 
         int form1 = "Product ID".length();
         int form2 = "Name".length();
@@ -101,7 +102,7 @@ public class Display {
             int form2a = prod.getName().length();
             int form3a = String.valueOf(prod.getPrice()).length();
             int form4a = String.valueOf(prod.getAmount()).length();
-            int form5a = String.valueOf(prod.getCategory()).length();
+            int form5a = String.valueOf(prod.getCategoryName()).length();
 
             if (form1 <= form1a) form1 = form1a;
             if (form2 <= form2a) form2 = form2a;
@@ -146,7 +147,7 @@ public class Display {
             String prodName = String.format(formater2, product.getName());
             String prodPrice = String.format(formater3, product.getPrice());
             String prodAmount = String.format(formater4, product.getAmount());
-            String prodCategory = String.format(formater5, product.getCategory());
+            String prodCategory = String.format(formater5, product.getCategoryName());
 
             output += "│" + prodId + "│" + prodName + "│" + prodPrice +"│"+ prodAmount +"│"+ prodCategory+"│\n";
 
