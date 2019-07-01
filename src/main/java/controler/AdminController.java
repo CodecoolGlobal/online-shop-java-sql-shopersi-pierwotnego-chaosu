@@ -1,16 +1,21 @@
 package controler;
 
+import dao.sql.ProductDAO;
 import model.shop.Product;
 import model.shop.User;
+import model.shop.lists.ProductList;
 import view.Display;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class AdminController {
-    User user;
+    private User user;
+    private ProductList productList;
+
     public AdminController(User user){
         this.user = user;
+        this.productList = new ProductList(new ProductDAO().read());
     }
 
     public void run() {
@@ -25,24 +30,22 @@ public class AdminController {
             Display.clearScreen();
             Display.showMenu("adminMenu");
 
-
+            this.productList = new ProductList(new ProductDAO().read());
             switch (scanner.nextInt()) {
 
                 case 1: {
-
-                    Product product = new Product("kkkkkaaa", 12, 12, true,1);
-                    product.create();
-
+                    addNewProduct();
                 }
 
                 case 2: {
 
+                    break;
+                }
+
+                case 4: {
+
                     Display.clearScreen();
-                    try {
-                        System.in.read();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Display.printProductTable(productList);
                     break;
                 }
 
@@ -57,4 +60,23 @@ public class AdminController {
             }
         }
     }
+
+
+    public void addNewProduct(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Product name: ");
+        String name = scanner.nextLine();
+        System.out.print("\nProduct price: ");
+        System.out.print("\nProduct price: ");
+        double price = scanner.nextDouble();
+        System.out.print("\nAmount: ");
+        int amount = scanner.nextInt();
+        System.out.print("\nCategory id: ");
+        int categoryId = scanner.nextInt();
+        Product product = new Product(name,price,amount,amount > 0,categoryId);
+        productList.add(product);
+        product.create();
+        }
+
+
 }

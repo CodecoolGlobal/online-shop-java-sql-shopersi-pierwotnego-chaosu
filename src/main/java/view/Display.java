@@ -8,6 +8,7 @@ import model.shop.lists.ProductList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class Display {
@@ -86,7 +87,7 @@ public class Display {
 
     public static void printProductTable(ProductList products){
 
-        ArrayList<Product> productList = products.getProducts();
+        List<Product> productList = products.getProducts();
 
         int form1 = "Product ID".length();
         int form2 = "Name".length();
