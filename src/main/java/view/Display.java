@@ -167,9 +167,21 @@ public class Display {
         return Integer.valueOf(out);
     }
 
+    public static Double askForDouble(String question) {
+        System.out.println(question);
+        Scanner scanner = new Scanner(System.in);
+        String out = scanner.next();
+        while (!out.matches("([0-9]*)\\.([0-9]*)")) {
+            Display.printMessage("Use only doubles with .  ");
+            out = scanner.next();
+        }
+        return Double.valueOf(out);
+    }
+
 
     public static void printMessage(String message) {
         System.out.print("\n" + message + "\n");
+
     }
 
 
