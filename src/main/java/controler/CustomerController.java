@@ -15,7 +15,7 @@ import model.shop.Order;
 import model.shop.User;
 import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
-import model.shop.lists.ProductList;
+//import model.shop.lists.ProductList;
 import view.Display;
 
 import java.io.IOException;
@@ -48,7 +48,6 @@ public class CustomerController {
         while (isRunning) {
 
 
-
             Display.clearScreen();
             Display.showMenu("customerMenu");
 
@@ -77,12 +76,15 @@ public class CustomerController {
                 }
                 case 4: {
                     Display.printBasket(basket);
-                    editBasket();
+//                    editBasket();
                     Display.prompt();
+                }
+
                 case 6: {
-                    makeNewOrder();
+//                    makeNewOrder();
                     break;
                 }
+
                 case 8: {
                     basket.setBasketFromDB();
                     break;
@@ -102,39 +104,37 @@ public class CustomerController {
     private void editBasket() {
 
 
-
-
     }
 
-    private void addProdToB(){
+    private void addProdToB() {
         boolean isAsking = true;
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
             boolean isValid = productList.isIdValid(prodId);
 
-            if (isValid){
+            if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
 
-                if (quantity>0 && quantity<= productList.getProductById(prodId).getAmount()){
+                if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
-                    basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
+                    basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
                     isAsking = false;
                 } else System.out.println("r Amount");
 
-            } else System.out.println( "Incorrect Id");
+            } else System.out.println("Incorrect Id");
 
         }
-        Display.prompt();
-
-    public void makeNewOrder (){
-        new OrdersDAO().create(user);
-        ordersList.setOrders(new OrdersDAO().readOrders(user));
-        Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size()-1);
-        new OrdersItemsDAO().create(basket,newOrder);
-        basket.getProducts().clear();
-        //TODO CLEAR BASKET DATABASE BY BASKET_DAO
-        //TODO Change general amount of products after making an order
     }
 
-}
+        public void makeNewOrder() {
+            new OrdersDAO().create(user);
+            ordersList.setOrders(new OrdersDAO().readOrders(user));
+            Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
+            new OrdersItemsDAO().create(basket, newOrder);
+            basket.getProducts().clear();
+            //TODO CLEAR BASKET DATABASE BY BASKET_DAO
+            //TODO Change general amount of products after making an order
+        }
+
+    }
