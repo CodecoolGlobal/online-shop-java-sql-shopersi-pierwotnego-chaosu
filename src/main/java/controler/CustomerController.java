@@ -104,7 +104,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            final boolean isValid = productList.isIdValid(prodId);
+            final boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("Set new amount of items / 0 to delete.");
@@ -115,13 +115,13 @@ public class CustomerController {
                     Set<Product> productSet = this.basket.getProducts().keySet();
 
 
-                    for (Product key: productSet) {
+                    for (Product key : productSet) {
 
                         if (key.getId() == prodId) {
                             this.basket.getProducts().remove(key);
                             isAsking = false;
                             break;
-                                }
+                        }
 
                     }
 
@@ -147,7 +147,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            boolean isValid = productList.isIdValid(prodId);
+            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
