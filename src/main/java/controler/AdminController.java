@@ -4,11 +4,11 @@ import dao.sql.ProductDAO;
 import model.shop.Category;
 import model.shop.Product;
 import model.shop.User;
+import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
-import model.shop.lists.ProductList;
+//import model.shop.abc.ProductList;
 import view.Display;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class AdminController {

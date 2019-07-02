@@ -5,6 +5,11 @@ import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
 import dao.sql.ProductDAO;
 import model.shop.Basket;
+
+import model.shop.User;
+
+import model.shop.abc.ProductList;
+import view.Display;
 import model.shop.Customer;
 import model.shop.Order;
 import model.shop.User;
@@ -15,6 +20,7 @@ import view.Display;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class CustomerController {
@@ -52,15 +58,16 @@ public class CustomerController {
                 case 1: {
 
                     Display.clearScreen();
-//                    System.out.println(this.productList);
                     Display.printProductTable(productList);
                     Display.prompt();
                     break;
                 }
 
                 case 2: {
-//                    basket.addProduct(1,this.productList.getProducts());
-                    Display.prompt();
+                    Display.clearScreen();
+                    Display.printProductTable(productList);
+                    addProdToB();
+
                     break;
                 }
                 case 3: {
@@ -68,6 +75,10 @@ public class CustomerController {
                     Display.prompt();
                     break;
                 }
+                case 4: {
+                    Display.printBasket(basket);
+                    editBasket();
+                    Display.prompt();
                 case 6: {
                     makeNewOrder();
                     break;
@@ -81,12 +92,40 @@ public class CustomerController {
                     break;
                 }
                 default: {
-//                    Display.clearScreen();
                 }
 
             }
         }
     }
+
+
+    private void editBasket() {
+
+
+
+
+    }
+
+    private void addProdToB(){
+        boolean isAsking = true;
+        while (isAsking) {
+
+            int prodId = Display.askForInt("Select productID");
+            boolean isValid = productList.isIdValid(prodId);
+
+            if (isValid){
+                int quantity = Display.askForInt("How many Items?");
+
+                if (quantity>0 && quantity<= productList.getProductById(prodId).getAmount()){
+
+                    basket.addProductToBasket(prodId,this.productList.getProducts(), quantity);
+                    isAsking = false;
+                } else System.out.println("r Amount");
+
+            } else System.out.println( "Incorrect Id");
+
+        }
+        Display.prompt();
 
     public void makeNewOrder (){
         new OrdersDAO().create(user);
