@@ -50,6 +50,7 @@ public class ProductList {
 
     public void removeAmountById(int id, int amount){
         //removes amount from product of given id
+        //TODO  - auto change in staus on the list - seen by customer,
         Product product = getProductById(id);
         product.setAmount(product.getAmount()-amount);
     }

@@ -48,20 +48,21 @@ public class CustomerController {
             Display.clearScreen();
             Display.showMenu("customerMenu");
 
+            int option = Display.askForInt("Choose an option");
 
-            switch (scanner.nextInt()) {
+            switch (option) {
 
                 case 1: {
 
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     Display.prompt();
                     break;
                 }
 
                 case 2: {
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     addProdToB();
 
                     break;
@@ -103,7 +104,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            final boolean isValid = productList.isIdValid(prodId);
+            final boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("Set new amount of items / 0 to delete.");
@@ -114,13 +115,13 @@ public class CustomerController {
                     Set<Product> productSet = this.basket.getProducts().keySet();
 
 
-                    for (Product key: productSet) {
+                    for (Product key : productSet) {
 
                         if (key.getId() == prodId) {
                             this.basket.getProducts().remove(key);
                             isAsking = false;
                             break;
-                                }
+                        }
 
                     }
 
@@ -146,7 +147,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            boolean isValid = productList.isIdValid(prodId);
+            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
@@ -154,6 +155,7 @@ public class CustomerController {
                 if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
+                    this.productList.removeAmountById(prodId, quantity);
                     isAsking = false;
                 } else System.out.println("Incorrect Amount");
 
