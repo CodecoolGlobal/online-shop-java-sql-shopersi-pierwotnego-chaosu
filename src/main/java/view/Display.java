@@ -159,8 +159,13 @@ public class Display {
     public static int askForInt(String question){
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
-        int out = scanner.nextInt();
-        return out;
+        return scanner.nextInt();
+    }
+
+    public static double askForDouble(String question){
+        System.out.println(question);
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextDouble();
     }
 
   

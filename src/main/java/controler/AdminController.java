@@ -82,15 +82,10 @@ public class AdminController {
 
 
     private void addNewProduct(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Product name: ");
-        String name = scanner.nextLine();
-        System.out.print("\nProduct price: ");
-        double price = scanner.nextDouble();
-        System.out.print("\nAmount: ");
-        int amount = scanner.nextInt();
-        System.out.print("\nCategory id: ");
-        int categoryId = scanner.nextInt();
+        String name = Display.askForString("Product name: ");
+        double price = Display.askForDouble("Product price: ");
+        int amount = Display.askForInt("Amount: ");
+        int categoryId = Display.askForInt("Category id: ");
         Product product = new Product(name,price,amount,amount > 0,categoryId);
         productList.add(product);
         product.create();
@@ -145,9 +140,8 @@ public class AdminController {
     }
 
     private void addNewCategory(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Category name: ");
-        String name = scanner.nextLine();
+
+        String name = Display.askForString("Category name: ");
         Category category = new Category(name);
         category.createInDB();
     }
@@ -155,13 +149,9 @@ public class AdminController {
     private void editCategory(){
         showCategories();
         CategoryList list = new CategoryList();
-        Scanner sc1 = new Scanner(System.in);
-        System.out.print("Category id: ");
-        int id = sc1.nextInt();
+        int id = Display.askForInt("Category id: ");
         Category category = list.getCategoryById(id);
-        System.out.print("\nChange " + category.getName()  +" into: ");
-        Scanner sc2 = new Scanner(System.in);
-        String name = sc2.nextLine();
+        String name = Display.askForString("Change " + category.getName()  +" into: ");
         category.setName(name);
         category.updateInDB();
     }
