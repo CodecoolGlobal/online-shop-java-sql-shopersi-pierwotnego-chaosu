@@ -163,6 +163,14 @@ public class Display {
         return out;
     }
 
+  
+    public static void printMessage(String message){
+        System.out.print("\n"+message+"\n");
+    }
+
+  
+  
+
     public static String askForString(String question){
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
