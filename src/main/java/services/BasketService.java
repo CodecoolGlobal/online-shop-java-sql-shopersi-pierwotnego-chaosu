@@ -5,45 +5,30 @@ import model.shop.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class BasketService {
-    private ArrayList<Product> basket;
-    private HashMap<Product, Integer> productsCounted;
-
-//    private int productId;
+    private ArrayList<HashMap<Product, Integer>> basket;
     private int userId;
-//    private int amount;
 
     public BasketService(int userId) {
         this.basket = new ArrayList<>();
-        this.productsCounted = countProducts();
-//        this.productId = productId;
+//        setProductsFromDB();
         this.userId = userId;
-//        this.amount = amount;
     }
 
-    private HashMap<Product, Integer> countProducts() {
-        HashMap<Product, Integer> productsM = new HashMap<>();
 
-        for (Product product : this.basket) {
-//            Integer id = product.getId();
-            if (productsM.containsKey(product)) {
-                Integer counter = productsM.get(product);
-                counter++;
-                productsM.replace(product, counter);
-            }
-            if (!productsM.containsKey(product)) {
-                productsM.put(product, 1);
-            }
-
-        }
-        return productsM;
-    }
 
     public void setProductsFromDB() {
         BasketsDAO basketsDAO = new BasketsDAO();
         basketsDAO.setUserId(this.userId);
         this.basket = basketsDAO.read();
     }
+
+    public ArrayList<HashMap<Product, Integer>> getBasket() {
+        return basket;
+    }
+
+
 }
 

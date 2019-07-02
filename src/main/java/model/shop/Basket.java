@@ -3,14 +3,10 @@ package model.shop;
 import services.BasketService;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 
 public class Basket {
     private int userId;
-    private int productId;
-    private int amount;
-    private Iterator iterator; //TODO
-    //    private ArrayList<Product> products;
     private HashMap<Product, Integer> products;
 
     public Basket(int userId) {
@@ -20,26 +16,19 @@ public class Basket {
     }
 
 
-    public void addProduct(Product product) {
+    public void addProductToBasket(int prodId, List<Product> productList, int quantity) {
 
-//        HashMap<Product, Integer> productsM = new HashMap<>();
+        for (Product prod : productList) {
+            if (prodId == prod.getId()) {
 
-        for (Product productK : this.products.keySet()) {
-
-//            Integer id = product.getId();
-
-            if (this.products.containsKey(product)) {
-                Integer counter = this.products.get(product);
-                counter++;
-                this.products.replace(product, counter);
-            }
-            if (!this.products.containsKey(product)) {
-                this.products.put(product, 1);
+                if (products.containsKey(prod)) {
+                    int count = products.get(prod);
+                    count+= quantity;
+                    products.replace(prod, count);
+                } else products.put(prod, quantity);
             }
 
         }
-//        return this.products;
-
 
     }
 
@@ -47,10 +36,15 @@ public class Basket {
         products.remove(product);
     }
 
-//    public void setBasketFromDB(){
-//        this.products = new BasketService(this.userId);
+    public void setBasketFromDB() {
+        BasketService basketService = new BasketService(this.userId);
+        basketService.setProductsFromDB();
+        this.products = basketService.getBasket().get(0);
     }
 
+    public HashMap<Product, Integer> getProducts() {
+        return products;
+    }
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ import model.shop.Product;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BasketsDAO implements DAO {
 
@@ -14,14 +15,22 @@ public class BasketsDAO implements DAO {
 
     }
 
-    public ArrayList<Product> read() {
+    public ArrayList<HashMap<Product, Integer>> read() {
 //        Connection c = null;
-        ArrayList<Product> list = new ArrayList<Product>();
+        HashMap<Product, Integer> hM = new HashMap<>();
+        ArrayList<HashMap<Product, Integer>> list = new ArrayList<>();
         try {
             DataSource ds = new DataSource();
-            ResultSet res = ds.executeQuery("SELECT USERID, PRODUCTID FROM BASKETS WHERE USERID=" + this.userId + ";");
+            ResultSet res = ds.executeQuery("SELECT USERID, PRODUCTID, AMOUNT FROM BASKETS WHERE USERID=" + this.userId + ";");
 
             while (res.next()) {
+
+                int amountB = res.getInt("amount");
+
+
+//                for (int i = 0; i < amountB; i++) {
+
+
                 int productID = res.getInt("productId");
 
                 ResultSet rs = ds.executeQuery("SELECT * FROM PRODUCTS WHERE id=" + productID + ";");
@@ -33,17 +42,20 @@ public class BasketsDAO implements DAO {
                     int amount = rs.getInt("amount");
                     boolean isAvailable = (rs.getInt("isAvailable") != 0);
                     int category = (rs.getInt("categoryId"));
-
-                    list.add((new Product(id, name, price, amount, isAvailable, category)));
+                    Product product = new Product(name, price, amount, isAvailable, category);
+                    product.setId(id);
+//                    list.add(product);
+                    hM.put(product,amountB);
                 }
-            ds.close();
+                list.add(hM);
+                ds.close();
             }
+//            }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return list;
-
 
     }
 
