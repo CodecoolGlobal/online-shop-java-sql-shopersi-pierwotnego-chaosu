@@ -3,6 +3,7 @@ package view;
 import model.controller.FileReaderForDispaly;
 import model.shop.Basket;
 import model.shop.Product;
+import model.shop.User;
 import model.shop.abc.ProductList;
 
 import java.io.IOException;
@@ -82,7 +83,7 @@ public class Display {
 
     }
 
-    public static void printProductTable(ProductList products) {
+    public static void printProductTable(ProductList products, User user) {
 
         List<Product> productList = products.getProducts();
 
@@ -140,14 +141,28 @@ public class Display {
 
         for (Product product : productList) {
 
-            String prodId = String.format(formater1, product.getId());
-            String prodName = String.format(formater2, product.getName());
-            String prodPrice = String.format(formater3, product.getPrice());
-            String prodAmount = String.format(formater4, product.getAmount());
-            String prodCategory = String.format(formater5, product.getCategoryName());
 
-            output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│\n";
+            if (product.isAvailable() && !user.isAdmin()) {
 
+                String prodId = String.format(formater1, product.getId());
+                String prodName = String.format(formater2, product.getName());
+                String prodPrice = String.format(formater3, product.getPrice());
+                String prodAmount = String.format(formater4, product.getAmount());
+                String prodCategory = String.format(formater5, product.getCategoryName());
+
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│\n";
+            }else if (user.isAdmin()){
+
+                String prodId = String.format(formater1, product.getId());
+                String prodName = String.format(formater2, product.getName());
+                String prodPrice = String.format(formater3, product.getPrice());
+                String prodAmount = String.format(formater4, product.getAmount());
+                String prodCategory = String.format(formater5, product.getCategoryName());
+                String prodIsAvailable = String.valueOf(product.isAvailable());
+
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│"+ prodIsAvailable+"\n";
+
+            }
         }
 
         output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┴" + l4 + "┴" + l5 + "┘\n";

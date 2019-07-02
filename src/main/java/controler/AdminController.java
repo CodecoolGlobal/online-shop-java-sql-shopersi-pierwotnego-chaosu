@@ -50,7 +50,7 @@ public class AdminController {
                 case 1: {
 
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     break;
                 }
 

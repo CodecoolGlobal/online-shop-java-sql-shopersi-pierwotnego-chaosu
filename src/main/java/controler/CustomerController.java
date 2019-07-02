@@ -55,14 +55,14 @@ public class CustomerController {
                 case 1: {
 
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     Display.prompt();
                     break;
                 }
 
                 case 2: {
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     addProdToB();
 
                     break;
