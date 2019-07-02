@@ -155,6 +155,7 @@ public class CustomerController {
                 if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
+                    this.productList.removeAmountById(prodId, quantity);
                     isAsking = false;
                 } else System.out.println("Incorrect Amount");
 
