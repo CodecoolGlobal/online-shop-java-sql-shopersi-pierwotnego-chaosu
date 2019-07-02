@@ -17,7 +17,10 @@ public class LogInController {
         while (isRunning) {
             Display.clearScreen();
             Display.showMenu("logMenu");
-            switch (scanner.nextInt()) {
+
+            int option = Display.askForInt("Choose an option");
+
+            switch (option) {
                 case 1: {
                     logInUser();
                     break;

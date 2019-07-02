@@ -6,6 +6,7 @@ import model.shop.Basket;
 import model.shop.Order;
 import model.shop.OrderItem;
 import model.shop.Product;
+import model.shop.User;
 import model.shop.abc.ProductList;
 import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
@@ -87,7 +88,7 @@ public class Display {
 
     }
 
-    public static void printProductTable(ProductList products){
+    public static void printProductTable(ProductList products, User user) {
 
         List<Product> productList = products.getProducts();
 
@@ -130,7 +131,7 @@ public class Display {
         String l5 = multi(form5, "─");
 
 
-        output += "┌" + l1 + "┬" + l2 + "┬" + l3 +"┬" + l4 +"┬" + l5 + "┐\n";
+        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 + "┐\n";
 
 
         String prodIdH = String.format(formater1, "Product ID");
@@ -139,44 +140,72 @@ public class Display {
         String prodAmountH = String.format(formater4, "Amount");
         String prodCategoryH = String.format(formater5, "Category");
 
-        output += "│" + prodIdH + "│" + prodNameH + "│" + prodPriceH +"│"+ prodAmountH +"│"+ prodCategoryH+"│\n";
+        output += "│" + prodIdH + "│" + prodNameH + "│" + prodPriceH + "│" + prodAmountH + "│" + prodCategoryH + "│\n";
 
-        output += "├" + l1 + "┼" + l2 + "┼" + l3 +"┼" + l4 +"┼" + l5 +"┤\n";
+        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┼" + l4 + "┼" + l5 + "┤\n";
 
         for (Product product : productList) {
 
-            String prodId = String.format(formater1, product.getId());
-            String prodName = String.format(formater2, product.getName());
-            String prodPrice = String.format(formater3, product.getPrice());
-            String prodAmount = String.format(formater4, product.getAmount());
-            String prodCategory = String.format(formater5, product.getCategoryName());
 
-            output += "│" + prodId + "│" + prodName + "│" + prodPrice +"│"+ prodAmount +"│"+ prodCategory+"│\n";
+            if (product.isAvailable() && !user.isAdmin()) {
 
+                String prodId = String.format(formater1, product.getId());
+                String prodName = String.format(formater2, product.getName());
+                String prodPrice = String.format(formater3, product.getPrice());
+                String prodAmount = String.format(formater4, product.getAmount());
+                String prodCategory = String.format(formater5, product.getCategoryName());
+
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│\n";
+            }else if (user.isAdmin()){
+
+                String prodId = String.format(formater1, product.getId());
+                String prodName = String.format(formater2, product.getName());
+                String prodPrice = String.format(formater3, product.getPrice());
+                String prodAmount = String.format(formater4, product.getAmount());
+                String prodCategory = String.format(formater5, product.getCategoryName());
+                String prodIsAvailable = String.valueOf(product.isAvailable());
+
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│"+ prodIsAvailable+"\n";
+
+            }
         }
 
-        output += "└" + l1 + "┴" + l2 + "┴" + l3 +"┴" + l4 + "┴" + l5 +"┘\n";
+        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┴" + l4 + "┴" + l5 + "┘\n";
 
         System.out.println(output);
-        
+
     }
 
-    public static int askForInt(String question){
+    public static int askForInt(String question) {
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
-        int out = scanner.nextInt();
-        return out;
+        String out = scanner.next();
+        while (!out.matches("[0-9]+")) {
+            Display.printMessage("Use only numbers");
+            out = scanner.next();
+        }
+        return Integer.valueOf(out);
     }
 
-  
-    public static void printMessage(String message){
-        System.out.print("\n"+message+"\n");
+    public static Double askForDouble(String question) {
+        System.out.println(question);
+        Scanner scanner = new Scanner(System.in);
+        String out = scanner.next();
+        while (!out.matches("([0-9]*)\\.([0-9]*)")) {
+            Display.printMessage("Use only doubles with .  ");
+            out = scanner.next();
+        }
+        return Double.valueOf(out);
     }
 
-  
-  
 
-    public static String askForString(String question){
+    public static void printMessage(String message) {
+        System.out.print("\n" + message + "\n");
+
+    }
+
+
+    public static String askForString(String question) {
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
         String out = scanner.next();
