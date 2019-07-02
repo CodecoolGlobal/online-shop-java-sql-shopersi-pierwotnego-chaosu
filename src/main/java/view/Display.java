@@ -3,13 +3,10 @@ package view;
 import model.controller.FileReaderForDispaly;
 import model.shop.Basket;
 import model.shop.Product;
-import model.shop.lists.ProductList;
+import model.shop.abc.ProductList;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Display {
 
@@ -153,29 +150,33 @@ public class Display {
 
         }
 
-
-
-
-
-
         output += "└" + l1 + "┴" + l2 + "┴" + l3 +"┴" + l4 + "┴" + l5 +"┘\n";
 
-
-
-
-
         System.out.println(output);
-
-
-
-
-
-
+        
     }
 
+    public static int askForInt(String question){
+        System.out.println(question);
+        Scanner scanner = new Scanner(System.in);
+        int out = scanner.nextInt();
+        return out;
+    }
 
+  
+    public static void printMessage(String message){
+        System.out.print("\n"+message+"\n");
+    }
 
+  
+  
 
+    public static String askForString(String question){
+        System.out.println(question);
+        Scanner scanner = new Scanner(System.in);
+        String out = scanner.next();
+        return out;
+    }
 
 
     public static void prompt() {

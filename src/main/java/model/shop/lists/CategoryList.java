@@ -29,4 +29,14 @@ public class CategoryList {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        String list = "";
+        for (Category category: categoryList
+             ) {list += category.toString() + "\n";
+
+        }
+        return list;
+    }
 }

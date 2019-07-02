@@ -1,5 +1,5 @@
-.idea
-.settings
+.idea/
+.settings/
 target/
 .project
 *.iml
@@ -8,4 +8,3 @@ target/
 .classpath
 launch.json
 src/main/resources/onlineshop.db
-
