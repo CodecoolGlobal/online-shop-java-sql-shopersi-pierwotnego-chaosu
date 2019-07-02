@@ -141,7 +141,7 @@ public class AdminController {
     }
 
     private void showCategories(){
-        System.out.println(new CategoryList());
+        System.out.println(new CategoryList().toString());
     }
 
     private void addNewCategory(){

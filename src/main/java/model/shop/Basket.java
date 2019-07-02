@@ -23,17 +23,15 @@ public class Basket {
 
                 if (products.containsKey(prod)) {
                     int count = products.get(prod);
-                    count+= quantity;
+                    count += quantity;
                     products.replace(prod, count);
                 } else products.put(prod, quantity);
             }
-
         }
-
     }
 
-    public void removeProduct(Product product) {
-        products.remove(product);
+    public void removeProduct(Product product){
+        this.products.remove(product);
     }
 
     public void setBasketFromDB() {
