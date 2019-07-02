@@ -1,12 +1,11 @@
 package dao.sql;
 
-import model.shop.OrdersItems;
-import model.shop.Product;
 import model.shop.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UsersDAO implements DAO {
@@ -43,9 +42,8 @@ public class UsersDAO implements DAO {
         public ArrayList<User> read(){
         Connection c = null;
         ArrayList<User> list = new ArrayList<User>();
-        try {
             DataSource ds = new DataSource();
-            ResultSet rs = ds.executeQuery("SELECT * FROM USERS;");
+            try (ResultSet rs = ds.executeQuery("SELECT * FROM USERS;")){
             while(rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
@@ -61,10 +59,12 @@ public class UsersDAO implements DAO {
             }
             rs.close();
 
-        } catch ( Exception e ) {
+        } catch ( SQLException e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
-        };
+        }finally{
+                ds.close();
+            };
         return list;
     }
 

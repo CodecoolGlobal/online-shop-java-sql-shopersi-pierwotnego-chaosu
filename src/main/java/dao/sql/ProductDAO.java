@@ -37,8 +37,8 @@ public class ProductDAO implements DAO {
     public ArrayList<Product> read(){
 //        Connection c = new DataSource().getConnection();
         ArrayList<Product> list = new ArrayList<Product>();
-        DataSource ds = new DataSource();
-        try (ResultSet rs = ds.executeQuery("SELECT * FROM PRODUCTS;")) {
+//        DataSource ds = new DataSource();
+        try (ResultSet rs = new DataSource().executeQuery("SELECT * FROM PRODUCTS;")) {
             while(rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
@@ -54,8 +54,6 @@ public class ProductDAO implements DAO {
         } catch (SQLException e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
-        } finally{
-            ds.close();
         }
         return list;
     }

@@ -1,13 +1,13 @@
 package model.shop;
 
-public class OrdersItems {
+public class OrderItem {
     private int id;
     private int orderId;
     private int itemId;
     private int amount;
     private float price;
 
-    public OrdersItems (int id, int orderId, int itemId, int amount, float price){
+    public OrderItem(int id, int orderId, int itemId, int amount, float price){
         this.id = id;
         this.orderId = orderId;
         this.itemId = itemId;
@@ -41,7 +41,7 @@ public class OrdersItems {
 
     @Override
     public String toString() {
-        return "OrdersItems{" +
+        return "OrderItem{" +
                 "id=" + id +
                 ", orderId='" + orderId + '\'' +
                 ", itemId=" + itemId +
