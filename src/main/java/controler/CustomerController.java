@@ -84,7 +84,7 @@ public class CustomerController {
                 }
                 case 7: {
                     Display.clearScreen();
-                    Display.printOrdersTable(ordersList, productList);
+                    Display.printOrdersTable(ordersList, productList, user);
                     Display.prompt();
                     break;
                 }

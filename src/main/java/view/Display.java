@@ -236,7 +236,7 @@ public class Display {
     }
 
 
-    public static void printOrdersTable(OrdersList orders, ProductList products){
+    public static void printOrdersTable(OrdersList orders, ProductList products, User user){
 
         for (Order order: orders.getOrders()) {
             printMessage("Order number: " + order.getId()+", Status: "+order.getStatus()+", Date: "+order.getDate());
@@ -253,7 +253,7 @@ public class Display {
                     productsInOrder.add(product);
                     totalPrice += product.getPrice();
                 }
-                printProductTable(productsInOrder);
+                printProductTable(productsInOrder, user);
                 printMessage("Total price for this order: " + totalPrice + "$.\n");
 
 
