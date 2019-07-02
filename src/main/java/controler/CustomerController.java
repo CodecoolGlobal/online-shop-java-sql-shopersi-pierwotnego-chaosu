@@ -120,7 +120,7 @@ public class CustomerController {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
                     isAsking = false;
-                } else System.out.println("r Amount");
+                } else System.out.println("Incorrect Amount");
 
             } else System.out.println("Incorrect Id");
 
