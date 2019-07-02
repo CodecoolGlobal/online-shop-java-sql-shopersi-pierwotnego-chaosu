@@ -48,8 +48,9 @@ public class CustomerController {
             Display.clearScreen();
             Display.showMenu("customerMenu");
 
+            int option = Display.askForInt("Choose an option");
 
-            switch (scanner.nextInt()) {
+            switch (option) {
 
                 case 1: {
 

@@ -27,7 +27,10 @@ public class AdminController {
             Display.clearScreen();
             Display.showMenu("adminMenu");
             this.productList = new ProductList(new ProductDAO().read());
-            switch (scanner.nextInt()) {
+
+            int option = Display.askForInt("Choose an option");
+
+            switch (option) {
 
                 case 2: {
                     addNewProduct();

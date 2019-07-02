@@ -82,7 +82,7 @@ public class Display {
 
     }
 
-    public static void printProductTable(ProductList products){
+    public static void printProductTable(ProductList products) {
 
         List<Product> productList = products.getProducts();
 
@@ -125,7 +125,7 @@ public class Display {
         String l5 = multi(form5, "─");
 
 
-        output += "┌" + l1 + "┬" + l2 + "┬" + l3 +"┬" + l4 +"┬" + l5 + "┐\n";
+        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 + "┐\n";
 
 
         String prodIdH = String.format(formater1, "Product ID");
@@ -134,9 +134,9 @@ public class Display {
         String prodAmountH = String.format(formater4, "Amount");
         String prodCategoryH = String.format(formater5, "Category");
 
-        output += "│" + prodIdH + "│" + prodNameH + "│" + prodPriceH +"│"+ prodAmountH +"│"+ prodCategoryH+"│\n";
+        output += "│" + prodIdH + "│" + prodNameH + "│" + prodPriceH + "│" + prodAmountH + "│" + prodCategoryH + "│\n";
 
-        output += "├" + l1 + "┼" + l2 + "┼" + l3 +"┼" + l4 +"┼" + l5 +"┤\n";
+        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┼" + l4 + "┼" + l5 + "┤\n";
 
         for (Product product : productList) {
 
@@ -146,32 +146,34 @@ public class Display {
             String prodAmount = String.format(formater4, product.getAmount());
             String prodCategory = String.format(formater5, product.getCategoryName());
 
-            output += "│" + prodId + "│" + prodName + "│" + prodPrice +"│"+ prodAmount +"│"+ prodCategory+"│\n";
+            output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│\n";
 
         }
 
-        output += "└" + l1 + "┴" + l2 + "┴" + l3 +"┴" + l4 + "┴" + l5 +"┘\n";
+        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┴" + l4 + "┴" + l5 + "┘\n";
 
         System.out.println(output);
-        
+
     }
 
-    public static int askForInt(String question){
+    public static int askForInt(String question) {
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
-        int out = scanner.nextInt();
-        return out;
+        String out = scanner.next();
+        while (!out.matches("[0-9]+")) {
+            Display.printMessage("Use only numbers");
+            out = scanner.next();
+        }
+        return Integer.valueOf(out);
     }
 
-  
-    public static void printMessage(String message){
-        System.out.print("\n"+message+"\n");
+
+    public static void printMessage(String message) {
+        System.out.print("\n" + message + "\n");
     }
 
-  
-  
 
-    public static String askForString(String question){
+    public static String askForString(String question) {
         System.out.println(question);
         Scanner scanner = new Scanner(System.in);
         String out = scanner.next();
