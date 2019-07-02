@@ -173,6 +173,10 @@ public class Display {
 
     }
 
+    public static void printMessage(String message){
+        System.out.print("\n"+message+"\n");
+    }
+
 
 
 

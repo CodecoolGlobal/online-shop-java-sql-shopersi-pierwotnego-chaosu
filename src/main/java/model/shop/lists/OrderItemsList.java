@@ -1,5 +1,6 @@
 package model.shop.lists;
 
+import dao.sql.OrdersItemsDAO;
 import model.shop.OrderItem;
 import model.shop.Product;
 
@@ -29,7 +30,7 @@ public class OrderItemsList {
 //        orderItem.delete();   <<<----------DAO delete like in ProductDAO to delete from DATABASE
     }
 
-    public ArrayList<OrderItem> getProducts() {
+    public ArrayList<OrderItem> getItems() {
         return this.orderItems;
     }
 
