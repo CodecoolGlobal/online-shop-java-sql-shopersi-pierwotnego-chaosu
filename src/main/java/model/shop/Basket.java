@@ -4,6 +4,7 @@ import services.BasketService;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Basket {
     private int userId;
@@ -30,9 +31,25 @@ public class Basket {
         }
     }
 
-    public void removeProduct(Product product){
+    public void removeProduct(Product product) {
         this.products.remove(product);
     }
+
+    ;
+
+    public Double countTotalValue() {
+        Double totalValue = 0.0;
+
+        for (Map.Entry<Product, Integer> entry : this.products.entrySet()) {
+            Product key = entry.getKey();
+            Integer value = entry.getValue();
+            totalValue += key.getPrice() * value;
+        }
+
+
+        return totalValue;
+    }
+
 
     public void setBasketFromDB() {
         BasketService basketService = new BasketService(this.userId);
