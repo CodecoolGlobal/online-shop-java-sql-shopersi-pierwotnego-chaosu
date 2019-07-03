@@ -110,7 +110,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            final boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
+            final boolean isValid = productList.isIdValid(prodId); //&& productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("Set new amount of items / 0 to delete.");
@@ -135,12 +135,13 @@ public class CustomerController {
                 } else if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
                     this.basket.getProducts().forEach((key, value) -> {
-
-                        basket.getProducts().replace(key, quantity);
-
+                        if (key.getId() == prodId) {
+                            basket.getProducts().replace(key, quantity);
+                        }
 
                     });
                     isAsking = false;
+
                 } else System.out.println("Incorrect Amount");
 
             } else System.out.println("Incorrect Id");
