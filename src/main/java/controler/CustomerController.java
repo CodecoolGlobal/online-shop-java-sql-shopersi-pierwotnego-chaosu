@@ -173,21 +173,26 @@ public class CustomerController {
     }
 
     public void makeNewOrder() {
-        new OrdersDAO().create(user);
-        ordersList.setOrders(new OrdersDAO().readOrders(user));
-        Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
-        new OrdersItemsDAO().create(basket, newOrder);
-        for (Product productFromBasket: basket.getProducts().keySet()) {
-            for (Product productUpdated: productList.getProducts()) {
-                if (productFromBasket.getId()==productUpdated.getId()) {
-                    int amount = productUpdated.getAmount() - basket.getProducts().get(productUpdated);
-                    productUpdated.setAmount(amount);
-                    new ProductDAO().update(productUpdated);
+        if (!basket.getProducts().isEmpty()) {
+            new OrdersDAO().create(user);
+            ordersList.setOrders(new OrdersDAO().readOrders(user));
+            Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
+            new OrdersItemsDAO().create(basket, newOrder);
+            for (Product productFromBasket : basket.getProducts().keySet()) {
+                for (Product productUpdated : productList.getProducts()) {
+                    if (productFromBasket.getId() == productUpdated.getId()) {
+                        int amount = productUpdated.getAmount() - basket.getProducts().get(productUpdated);
+                        productUpdated.setAmount(amount);
+                        new ProductDAO().update(productUpdated);
+                    }
                 }
             }
+            basket.getProducts().clear();
+            new BasketsDAO().delete(user);
+        } else {
+            Display.printMessage("Your basket is empty. Add items to basket.");
         }
-        basket.getProducts().clear();
-        new BasketsDAO().delete(user);
+
     }
 
 }
