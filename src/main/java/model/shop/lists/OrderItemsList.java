@@ -3,6 +3,7 @@ package model.shop.lists;
 import dao.sql.OrdersItemsDAO;
 import model.shop.OrderItem;
 import model.shop.Product;
+import model.shop.abc.ProductList;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,14 @@ public class OrderItemsList {
 
     public ArrayList<OrderItem> getItems() {
         return this.orderItems;
+    }
+
+    public int totalPrice (ProductList products) {
+        int totalPrice = 0;
+        for (Product product : products.getProducts()) {
+            totalPrice += (product.getPrice() * product.getAmount());
+        }
+        return totalPrice;
     }
 
     @Override

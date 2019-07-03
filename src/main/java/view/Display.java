@@ -261,9 +261,7 @@ public class Display {
     public static void printOrdersTable(OrdersList orders, ProductList products, User user) {
 
         for (Order order : orders.getOrders()) {
-            printMessage("Order number: " + order.getId() + ", Status: " + order.getStatus() + ", Date: " + order.getDate());
-
-            int totalPrice = 0;
+            printMessage("OrderId: " + order.getId() + ", Status: " + order.getStatus() + ", Date: " + order.getDate());
             ArrayList<Product> emptyList = new ArrayList<>();
             ProductList productsInOrder = new ProductList(emptyList);
             OrderItemsList orderedItemsList = new OrderItemsList(new OrdersItemsDAO().read(order));
@@ -271,12 +269,11 @@ public class Display {
             for (OrderItem orderItem : orderedItemsList.getItems()) {
                 Product product = products.getProductById(orderItem.getItemId());
                 product.setAmount(orderItem.getAmount());
-//                    System.out.println(product);
                 productsInOrder.add(product);
-                totalPrice += product.getPrice();
             }
             printProductTable(productsInOrder, user);
-            printMessage("Total price for this order: " + totalPrice + "$.\n");
+            printMessage("Total price for this order: " + orderedItemsList.totalPrice(productsInOrder) + "$.\n");
+
 
 
         }
