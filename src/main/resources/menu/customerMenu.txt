@@ -6,4 +6,4 @@
 6. Place order
 7. Show orders
 8. Set Basket from data base
-0. EXIT
+0. LOGOUT

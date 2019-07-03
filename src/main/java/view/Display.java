@@ -34,6 +34,8 @@ public class Display {
         int form1 = "Product ID".length();
         int form2 = "Name".length();
         int form3 = "Quantity".length();
+        int form4 = "Price".length();
+        int form5 = "Value".length();
 
 
         for (Product prod : keyS) {
@@ -41,10 +43,15 @@ public class Display {
             int form1a = String.valueOf(prod.getId()).length();
             int form2a = prod.getName().length();
             int form3a = String.valueOf(basketM.get(prod)).length();
+            int form4a = Double.toString(prod.getPrice()).length();
+            int form5a = Double.toString(prod.getPrice() * basketM.get(prod)).length();
+
 
             if (form1 <= form1a) form1 = form1a;
             if (form2 <= form2a) form2 = form2a;
             if (form3 <= form3a) form3 = form3a;
+            if (form4 <= form4a) form4 = form4a;
+            if (form5 <= form5a) form5 = form5a;
 
         }
 
@@ -52,6 +59,8 @@ public class Display {
         String formater1 = "%" + form1 + "s";
         String formater2 = "%" + form2 + "s";
         String formater3 = "%" + form3 + "s";
+        String formater4 = "%" + form4 + "s";
+        String formater5 = "%" + form5 + "s";
 
 
         String output = "";
@@ -60,18 +69,22 @@ public class Display {
         String l1 = multi(form1, "─");
         String l2 = multi(form2, "─");
         String l3 = multi(form3, "─");
+        String l4 = multi(form4, "─");
+        String l5 = multi(form5, "─");
 
 
-        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┐\n";
+        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 + "┐\n";
 
 
         String prodIdH = String.format(formater1, "Product ID");
         String prodNameH = String.format(formater2, "Name");
         String prodQuantityH = String.format(formater3, "Quantity");
+        String prodPriceH = String.format(formater4, "Price");
+        String prodValueH = String.format(formater5, "Value");
 
-        output += "│" + prodIdH + "│" + prodNameH + "│" + prodQuantityH + "│\n";
+        output += "│" + prodIdH + "│" + prodNameH + "│" + prodQuantityH + "│" + prodPriceH + "│" + prodValueH + "│\n";
 
-        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┤\n";
+        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┼" + l4 + "┼" + l5 + "┤\n";
 
 
         for (Product product : keyS) {
@@ -79,12 +92,17 @@ public class Display {
             String prodId = String.format(formater1, product.getId());
             String prodName = String.format(formater2, product.getName());
             String prodQuantity = String.format(formater3, String.valueOf(basketM.get(product)));
-            output += "│" + prodId + "│" + prodName + "│" + prodQuantity + "│\n";
+            String prodPrice = String.format(formater4, Double.toString(product.getPrice()));
+            String prodValue = String.format(formater5, Double.toString(product.getPrice() * basketM.get(product))
+            );
+
+
+            output += "│" + prodId + "│" + prodName + "│" + prodQuantity + "│" + prodPrice + "│" + prodValue + "│\n";
 
         }
-        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┘\n";
+        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┴" + l4 + "┴" + l5 + "┘\n";
 
-
+        output += "\n" + "Total price for this order: " + basket.countTotalValue() + "$.\n";
         System.out.print(output);
 
 
@@ -195,7 +213,7 @@ public class Display {
         Scanner scanner = new Scanner(System.in);
         String out = scanner.next();
         while (!out.matches("([0-9]*)\\.([0-9]*)")) {
-            Display.printMessage("Use only doubles with .  ");
+            Display.printMessage("Use only doubles with . as separator ");
             out = scanner.next();
         }
         return Double.valueOf(out);
