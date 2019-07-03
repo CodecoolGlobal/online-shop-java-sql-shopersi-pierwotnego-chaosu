@@ -1,12 +1,16 @@
 package controler;
 
+import dao.sql.OrdersDAO;
 import dao.sql.ProductDAO;
+import dao.sql.UsersDAO;
 import model.shop.Category;
 import model.shop.Product;
 import model.shop.User;
 import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
 //import model.shop.abc.ProductList;
+import model.shop.lists.OrdersList;
+import model.shop.lists.UserList;
 import view.Display;
 
 import java.util.Scanner;
@@ -14,10 +18,14 @@ import java.util.Scanner;
 public class AdminController {
     private User user;
     private ProductList productList;
+    private UserList userList;
+//    private OrdersList ordersList;
 
     public AdminController(User user){
         this.user = user;
         this.productList = new ProductList(new ProductDAO().read());
+        this.userList = new UserList(new UsersDAO().read());
+
     }
 
     public void run() {
@@ -68,6 +76,11 @@ public class AdminController {
 
                 case 7: {
                     editCategory();
+                    break;
+                }
+
+                case 9: {
+                    Display.printOngoingOrders(userList , productList);
                     break;
                 }
 
