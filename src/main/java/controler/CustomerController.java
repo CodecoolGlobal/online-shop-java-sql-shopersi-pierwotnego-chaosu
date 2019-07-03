@@ -79,7 +79,13 @@ public class CustomerController {
                 }
 
                 case 6: {
-//                    makeNewOrder();
+                    makeNewOrder();
+                    break;
+                }
+                case 7: {
+                    Display.clearScreen();
+                    Display.printOrdersTable(ordersList, productList, user);
+                    Display.prompt();
                     break;
                 }
 
@@ -169,7 +175,7 @@ public class CustomerController {
         ordersList.setOrders(new OrdersDAO().readOrders(user));
         Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
         new OrdersItemsDAO().create(basket, newOrder);
-        basket.getProducts().clear();
+//        basket.getProducts().clear();
         //TODO CLEAR BASKET DATABASE BY BASKET_DAO
         //TODO Change general amount of products after making an order
     }
