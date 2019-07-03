@@ -1,8 +1,12 @@
 package dao.sql;
 
 import model.shop.Product;
+import model.shop.User;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -63,8 +67,20 @@ public class BasketsDAO implements DAO {
 
     }
 
-    public void delete() {
+    public void delete() {}
 
+    public void delete(User user) {
+        try (Connection c = new DataSource().getConnection())
+        {
+
+            PreparedStatement st = c.prepareStatement("DELETE FROM baskets WHERE userId = " + user.getId() + ";");
+            st.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("SQL exception when deleting. ");
+            System.out.println(e);
+        }
     }
 
     public void setUserId(int userId) {

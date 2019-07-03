@@ -1,6 +1,7 @@
 package controler;
 
 
+import dao.sql.BasketsDAO;
 import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
 import dao.sql.ProductDAO;
@@ -175,7 +176,8 @@ public class CustomerController {
         ordersList.setOrders(new OrdersDAO().readOrders(user));
         Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
         new OrdersItemsDAO().create(basket, newOrder);
-//        basket.getProducts().clear();
+        basket.getProducts().clear();
+        new BasketsDAO().delete(user);
         //TODO CLEAR BASKET DATABASE BY BASKET_DAO
         //TODO Change general amount of products after making an order
     }
