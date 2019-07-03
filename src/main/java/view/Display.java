@@ -185,6 +185,7 @@ public class Display {
             out = scanner.next();
         }
         return Integer.valueOf(out);
+
     }
 
     public static Double askForDouble(String question) {
