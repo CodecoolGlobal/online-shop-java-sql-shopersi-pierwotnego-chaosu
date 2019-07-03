@@ -4,6 +4,7 @@ import model.shop.Basket;
 import model.shop.Order;
 import model.shop.OrderItem;
 import model.shop.Product;
+import view.Display;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,24 +44,30 @@ public class OrdersItemsDAO implements DAO {
     public void create(Basket basket, Order order) {
 
         HashMap<Product, Integer> basketMap = basket.getProducts();
-        for (Product product : basketMap.keySet()) {
-//            int available = product.isAvailable() ? 1 : 0;
-//            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
-            try (Connection c = new DataSource().getConnection()) {
-                String query = " insert into orders_items (orderId, itemId, amount , price)"
-                        + " values (?, ?, ?, ?)";
+        if (basketMap.keySet().isEmpty()) {
+            Display.printMessage("Your basket is empty. Add items to basket.");
 
-                PreparedStatement preparedStmt = c.prepareStatement(query);
-                preparedStmt.setInt(1, order.getId());
-                preparedStmt.setInt(2, product.getId());
-                preparedStmt.setInt(3, basketMap.get(product));
-                preparedStmt.setDouble(4, product.getPrice());
+        } else {
 
-                preparedStmt.execute();
+            for (Product product : basketMap.keySet()) {
+    //            int available = product.isAvailable() ? 1 : 0;
+    //            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
+                try (Connection c = new DataSource().getConnection()) {
+                    String query = " insert into orders_items (orderId, itemId, amount , price)"
+                            + " values (?, ?, ?, ?)";
 
-            } catch (SQLException e) {
-                System.err.println("SQL exception when creating. ");
-                e.printStackTrace();
+                    PreparedStatement preparedStmt = c.prepareStatement(query);
+                    preparedStmt.setInt(1, order.getId());
+                    preparedStmt.setInt(2, product.getId());
+                    preparedStmt.setInt(3, basketMap.get(product));
+                    preparedStmt.setDouble(4, product.getPrice());
+
+                    preparedStmt.execute();
+
+                } catch (SQLException e) {
+                    System.err.println("SQL exception when creating. ");
+                    e.printStackTrace();
+                }
             }
         }
     }
