@@ -109,5 +109,32 @@ public class OrdersDAO implements DAO {
 
     }
 
+    public ArrayList<Order> readAllOrders(){
+        Connection c = null;
+        ArrayList<Order> list = new ArrayList<Order>();
+        DataSource ds = new DataSource();
+        try (ResultSet rs = ds.executeQuery("SELECT * FROM ORDERS;" )){
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int userId = rs.getInt("userId");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+
+                Order newOrder = new Order();
+                newOrder.setId(id);
+                newOrder.setUserId(userId);
+                newOrder.setStatusAsSubmit();
+                list.add(newOrder);
+            }
+//            rs.close();
+
+        } catch ( SQLException e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }finally{
+            ds.close();
+        };
+        return list;
+    }
 }
 

@@ -1,5 +1,6 @@
 package view;
 
+import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
 import model.controller.FileReaderForDispaly;
 import model.shop.Basket;
@@ -10,6 +11,7 @@ import model.shop.User;
 import model.shop.abc.ProductList;
 import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
+import model.shop.lists.UserList;
 
 import java.io.IOException;
 import java.util.*;
@@ -156,7 +158,7 @@ public class Display {
                 String prodCategory = String.format(formater5, product.getCategoryName());
 
                 output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│\n";
-            }else if (user.isAdmin()){
+            } else if (user.isAdmin()) {
 
                 String prodId = String.format(formater1, product.getId());
                 String prodName = String.format(formater2, product.getName());
@@ -165,7 +167,7 @@ public class Display {
                 String prodCategory = String.format(formater5, product.getCategoryName());
                 String prodIsAvailable = String.valueOf(product.isAvailable());
 
-                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│"+ prodIsAvailable+"\n";
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│" + prodIsAvailable + "\n";
 
             }
         }
@@ -201,7 +203,8 @@ public class Display {
 
 
     public static void printMessage(String message) {
-        System.out.print("\n" + message + "\n");
+//        System.out.print("\n" + message + "\n");
+        System.out.println(message);
 
     }
 
@@ -237,28 +240,43 @@ public class Display {
     }
 
 
-    public static void printOrdersTable(OrdersList orders, ProductList products, User user){
+    public static void printOrdersTable(OrdersList orders, ProductList products, User user) {
 
-        for (Order order: orders.getOrders()) {
-            printMessage("Order number: " + order.getId()+", Status: "+order.getStatus()+", Date: "+order.getDate());
+        for (Order order : orders.getOrders()) {
+            printMessage("Order number: " + order.getId() + ", Status: " + order.getStatus() + ", Date: " + order.getDate());
 
             int totalPrice = 0;
             ArrayList<Product> emptyList = new ArrayList<>();
             ProductList productsInOrder = new ProductList(emptyList);
             OrderItemsList orderedItemsList = new OrderItemsList(new OrdersItemsDAO().read(order));
 
-            for (OrderItem orderItem: orderedItemsList.getItems()) {
-                    Product product = products.getProductById(orderItem.getItemId());
-                    product.setAmount(orderItem.getAmount());
+            for (OrderItem orderItem : orderedItemsList.getItems()) {
+                Product product = products.getProductById(orderItem.getItemId());
+                product.setAmount(orderItem.getAmount());
 //                    System.out.println(product);
-                    productsInOrder.add(product);
-                    totalPrice += product.getPrice();
-                }
-                printProductTable(productsInOrder, user);
-                printMessage("Total price for this order: " + totalPrice + "$.\n");
+                productsInOrder.add(product);
+                totalPrice += product.getPrice();
+            }
+            printProductTable(productsInOrder, user);
+            printMessage("Total price for this order: " + totalPrice + "$.\n");
 
 
         }
     }
-}
 
+    public static void printOngoingOrders(UserList userList, ProductList products) {
+        OrdersList allOrders = new OrdersList(new OrdersDAO().readAllOrders());
+        Set<Integer> usersIdList = new HashSet<Integer>();
+        for (Order order: allOrders.getOrders()) {
+            usersIdList.add(order.getUserId());
+        }
+        for (User user : userList.getUsers()) {
+                if (usersIdList.contains(user.getId())) {
+                    printMessage("Orders of user :" + user.getName());
+                    OrdersList orders = new OrdersList(new OrdersDAO().readOrders(user));
+                    printOrdersTable(orders, products, user);
+                }
+            }
+        }
+
+}

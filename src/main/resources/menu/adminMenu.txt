@@ -6,4 +6,5 @@
 6. Add new category
 7. Rename category
 8. Remove category
+9. Show ongoing orders
 0. LOGOUT

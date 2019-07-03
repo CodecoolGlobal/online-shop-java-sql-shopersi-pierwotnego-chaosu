@@ -10,13 +10,13 @@ public class UserList {
 
     public UserList(){}
 
-    public UserList(ArrayList<User> orders){this.users = orders;}
+    public UserList(ArrayList<User> users){this.users = users;}
 
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setOrders(ArrayList<User> users) {
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
 }

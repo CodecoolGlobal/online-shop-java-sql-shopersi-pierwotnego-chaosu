@@ -63,6 +63,7 @@ public class OrdersItemsDAO implements DAO {
                     preparedStmt.setDouble(4, product.getPrice());
 
                     preparedStmt.execute();
+                    Display.printMessage("You have placed your order succesfully.");
 
                 } catch (SQLException e) {
                     System.err.println("SQL exception when creating. ");

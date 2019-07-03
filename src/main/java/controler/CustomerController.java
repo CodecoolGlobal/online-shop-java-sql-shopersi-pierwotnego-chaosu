@@ -178,8 +178,6 @@ public class CustomerController {
         new OrdersItemsDAO().create(basket, newOrder);
         basket.getProducts().clear();
         new BasketsDAO().delete(user);
-        //TODO CLEAR BASKET DATABASE BY BASKET_DAO
-        //TODO Change general amount of products after making an order
     }
 
 }
