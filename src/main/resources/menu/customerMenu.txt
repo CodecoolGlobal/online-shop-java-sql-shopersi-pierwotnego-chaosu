@@ -1,9 +1,10 @@
 1. Show products
-2. Add new product to basket
-3. Show basket
-4. Edit basket
-5. Set basket to Data Base
-6. Place order
-7. Show orders
-8. Set Basket from data base
+2. Show Products from specific category
+3. Add new product to basket
+4. Show basket
+5. Edit basket
+6. Set basket to Data Base
+7. Place order
+8. Show orders
+9. Set Basket from data base
 0. LOGOUT

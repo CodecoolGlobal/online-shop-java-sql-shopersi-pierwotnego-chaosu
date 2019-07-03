@@ -6,6 +6,8 @@ import model.shop.Category;
 import java.util.List;
 
 public class CategoryList {
+
+
     private List<Category> categoryList;
 
     public CategoryList(){
@@ -30,6 +32,9 @@ public class CategoryList {
         return false;
     }
 
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
     @Override
     public String toString() {
         String list = "";

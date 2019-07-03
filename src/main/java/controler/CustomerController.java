@@ -8,6 +8,7 @@ import dao.sql.ProductDAO;
 import model.shop.*;
 
 import model.shop.abc.ProductList;
+import model.shop.lists.CategoryList;
 import view.Display;
 import model.shop.User;
 import model.shop.lists.OrderItemsList;
@@ -60,37 +61,40 @@ public class CustomerController {
                     Display.prompt();
                     break;
                 }
-
                 case 2: {
+                    showProductsFromSpecificCategory();
+                    break;
+                }
+                case 3: {
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
                     addProdToB();
 
                     break;
                 }
-                case 3: {
+                case 4: {
                     Display.printBasket(basket);
                     Display.prompt();
                     break;
                 }
-                case 4: {
+                case 5: {
                     Display.printBasket(basket);
                     editBasket();
                     Display.prompt();
                 }
 
-                case 6: {
+                case 7: {
                     makeNewOrder();
                     break;
                 }
-                case 7: {
+                case 8: {
                     Display.clearScreen();
                     Display.printOrdersTable(ordersList, productList, user);
                     Display.prompt();
                     break;
                 }
 
-                case 8: {
+                case 9: {
                     this.basket.setBasketFromDB();
                     break;
                 }
@@ -194,5 +198,31 @@ public class CustomerController {
         }
 
     }
+
+    public void showProductsFromSpecificCategory(){
+        ArrayList<Product> productsFromCategory = new ArrayList<Product>();
+        CategoryList categoryList = new CategoryList();
+        Display.printMessage(categoryList.toString());
+        Display.printMessage("Choose Id of category which you want to see products from.");
+        Scanner scanner = new Scanner(System.in);
+
+        String out = scanner.next();
+        while (!out.matches("[0-"+String.valueOf(categoryList.getCategoryList().size())+"]+")) {
+            Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
+            out = scanner.next();
+            if (out.equals("0")) break;
+        }
+        if (!out.equals("0")) {
+            Integer chooseCategory = Integer.valueOf(out);
+            for (Product product : productList.getProducts()) {
+                if (product.getCategory() == chooseCategory) {
+                    productsFromCategory.add(product);
+                }
+            }
+            ProductList productsListFromCategory = new ProductList(productsFromCategory);
+            Display.printProductTable(productsListFromCategory, user);
+        }
+    }
+
 
 }
