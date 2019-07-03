@@ -4,14 +4,10 @@ package controler;
 import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
 import dao.sql.ProductDAO;
-import model.shop.Basket;
-
-import model.shop.User;
+import model.shop.*;
 
 import model.shop.abc.ProductList;
 import view.Display;
-import model.shop.Customer;
-import model.shop.Order;
 import model.shop.User;
 import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
@@ -22,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Scanner;
+import java.util.Set;
 
 public class CustomerController {
 
@@ -51,20 +48,21 @@ public class CustomerController {
             Display.clearScreen();
             Display.showMenu("customerMenu");
 
+            int option = Display.askForInt("Choose an option");
 
-            switch (scanner.nextInt()) {
+            switch (option) {
 
                 case 1: {
 
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     Display.prompt();
                     break;
                 }
 
                 case 2: {
                     Display.clearScreen();
-                    Display.printProductTable(productList);
+                    Display.printProductTable(productList, user);
                     addProdToB();
 
                     break;
@@ -76,17 +74,23 @@ public class CustomerController {
                 }
                 case 4: {
                     Display.printBasket(basket);
-//                    editBasket();
+                    editBasket();
                     Display.prompt();
                 }
 
                 case 6: {
-//                    makeNewOrder();
+                    makeNewOrder();
+                    break;
+                }
+                case 7: {
+                    Display.clearScreen();
+                    Display.printOrdersTable(ordersList, productList, user);
+                    Display.prompt();
                     break;
                 }
 
                 case 8: {
-                    basket.setBasketFromDB();
+                    this.basket.setBasketFromDB();
                     break;
                 }
                 case 0: {
@@ -102,8 +106,46 @@ public class CustomerController {
 
 
     private void editBasket() {
+        boolean isAsking = true;
+        while (isAsking) {
+
+            int prodId = Display.askForInt("Select productID");
+            final boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
+
+            if (isValid) {
+                int quantity = Display.askForInt("Set new amount of items / 0 to delete.");
 
 
+                if (quantity == 0) {
+
+                    Set<Product> productSet = this.basket.getProducts().keySet();
+
+
+                    for (Product key : productSet) {
+
+                        if (key.getId() == prodId) {
+                            this.basket.getProducts().remove(key);
+                            isAsking = false;
+                            break;
+                        }
+
+                    }
+
+
+                } else if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
+
+                    this.basket.getProducts().forEach((key, value) -> {
+
+                        basket.getProducts().replace(key, quantity);
+
+
+                    });
+                    isAsking = false;
+                } else System.out.println("Incorrect Amount");
+
+            } else System.out.println("Incorrect Id");
+
+        }
     }
 
     private void addProdToB() {
@@ -111,7 +153,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            boolean isValid = productList.isIdValid(prodId);
+            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
@@ -119,22 +161,23 @@ public class CustomerController {
                 if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
+                    this.productList.removeAmountById(prodId, quantity);
                     isAsking = false;
-                } else System.out.println("r Amount");
+                } else System.out.println("Incorrect Amount");
 
             } else System.out.println("Incorrect Id");
 
         }
     }
 
-        public void makeNewOrder() {
-            new OrdersDAO().create(user);
-            ordersList.setOrders(new OrdersDAO().readOrders(user));
-            Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
-            new OrdersItemsDAO().create(basket, newOrder);
-            basket.getProducts().clear();
-            //TODO CLEAR BASKET DATABASE BY BASKET_DAO
-            //TODO Change general amount of products after making an order
-        }
-
+    public void makeNewOrder() {
+        new OrdersDAO().create(user);
+        ordersList.setOrders(new OrdersDAO().readOrders(user));
+        Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
+        new OrdersItemsDAO().create(basket, newOrder);
+//        basket.getProducts().clear();
+        //TODO CLEAR BASKET DATABASE BY BASKET_DAO
+        //TODO Change general amount of products after making an order
     }
+
+}
