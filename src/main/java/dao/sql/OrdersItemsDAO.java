@@ -44,11 +44,6 @@ public class OrdersItemsDAO implements DAO {
     public void create(Basket basket, Order order) {
 
         HashMap<Product, Integer> basketMap = basket.getProducts();
-        if (basketMap.keySet().isEmpty()) {
-            Display.printMessage("Your basket is empty. Add items to basket.");
-
-        } else {
-
             for (Product product : basketMap.keySet()) {
     //            int available = product.isAvailable() ? 1 : 0;
     //            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
@@ -70,7 +65,6 @@ public class OrdersItemsDAO implements DAO {
                     e.printStackTrace();
                 }
             }
-        }
     }
 
     public void create() {
