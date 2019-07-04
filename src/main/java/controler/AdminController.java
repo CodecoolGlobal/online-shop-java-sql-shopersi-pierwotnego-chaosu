@@ -1,5 +1,6 @@
 package controler;
 
+import dao.sql.CategoryDAO;
 import dao.sql.OrdersDAO;
 import dao.sql.ProductDAO;
 import dao.sql.UsersDAO;
@@ -102,7 +103,7 @@ public class AdminController {
         double price = Display.askForDouble("Product price: ");
         int amount = Display.askForInt("Amount: ");
         CategoryList categoryList = new CategoryList();
-        Display.printMessage(categoryList.toString());
+        Display.printCategories(categoryList);
         String idOfCategory = Display.askForString("Category id: ");
         while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
             Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
@@ -143,11 +144,19 @@ public class AdminController {
             if (!amount.equals("")) product.setAmount(Integer.valueOf(amount));
 
             System.out.print("\nNew category id: ");
-            String categoryId = sc2.nextLine();
 
-            if (!categoryId.equals("")) product.setCategory(Integer.valueOf(categoryId));
-
-            product.update();
+            CategoryList categoryList = new CategoryList();
+            Display.printCategories(categoryList);
+            String idOfCategory = sc2.nextLine();
+            while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
+                if (idOfCategory.equals("") || idOfCategory.equals("0")) break;
+                Display.printMessage("There is no such category. Choose correct Category ID or 0 to stop editing product:");
+                idOfCategory = Display.askForString("Category id: ");
+            }
+            if (!idOfCategory.equals("0")) {
+                if (!idOfCategory.equals("")) product.setCategory(Integer.valueOf(idOfCategory));
+                product.update();
+            }
         }
     }
 
@@ -162,8 +171,10 @@ public class AdminController {
         }
     }
 
-    private void showCategories() {
-        System.out.println(new CategoryList().toString());
+
+    private void showCategories(){
+        CategoryList categoryList = new CategoryList();
+        Display.printCategories(categoryList);
     }
 
     private void addNewCategory() {

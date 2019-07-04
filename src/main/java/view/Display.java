@@ -3,12 +3,9 @@ package view;
 import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
 import model.controller.FileReaderForDispaly;
-import model.shop.Basket;
-import model.shop.Order;
-import model.shop.OrderItem;
-import model.shop.Product;
-import model.shop.User;
+import model.shop.*;
 import model.shop.abc.ProductList;
+import model.shop.lists.CategoryList;
 import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
 import model.shop.lists.UserList;
@@ -307,4 +304,52 @@ public class Display {
             }
         }
 
+    public static void printCategories(CategoryList list) {
+
+        List<Category> categoryList = list.getCategoryList();
+
+        int form1 = "Category ID".length();
+        int form2 = "Name".length();
+
+        for (Category category : categoryList) {
+
+            int form1a = String.valueOf(category.getId()).length();
+            int form2a = category.getName().length();
+
+            if (form1 <= form1a) form1 = form1a;
+            if (form2 <= form2a) form2 = form2a;
+        }
+
+
+        String formater1 = "%" + form1 + "s";
+        String formater2 = "%" + form2 + "s";
+
+        String output = "";
+
+        String l1 = multi(form1, "─");
+        String l2 = multi(form2, "─");
+
+        output += "┌" + l1 + "┬" + l2 + "┐\n";
+
+
+        String categoryIdH = String.format(formater1, "Category ID");
+        String categoryNameH = String.format(formater2, "Name");
+
+        output += "│" + categoryIdH + "│" + categoryNameH + "│\n";
+
+        output += "├" + l1 + "┼" + l2 +"┤\n";
+
+
+        for (Category category : categoryList) {
+
+            String prodId = String.format(formater1, category.getId());
+            String prodName = String.format(formater2, category.getName());
+
+            output += "│" + prodId + "│" + prodName + "│\n";
+
+        }
+        output += "└" + l1 + "┴" + l2 + "┘\n";
+
+        System.out.print(output);
+    }
 }
