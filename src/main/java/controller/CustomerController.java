@@ -58,7 +58,7 @@ class CustomerController {
 
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
                 case 2: {
@@ -73,13 +73,13 @@ class CustomerController {
                 }
                 case 4: {
                     Display.printBasket(basket);
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
                 case 5: {
                     Display.printBasket(basket);
                     editBasket();
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
                 case 6: {
@@ -93,7 +93,7 @@ class CustomerController {
                 case 8: {
                     Display.clearScreen();
                     Display.printOrdersTable(ordersList, productList, user);
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
 
@@ -136,6 +136,14 @@ class CustomerController {
                     for (Product key : productSet) {
 
                         if (key.getId() == prodId) {
+
+                            int amount1 = productList.getProductById(prodId).getAmount();
+                            int amount2 = this.basket.getProducts().get(key);
+                            productList.getProductById(prodId).setAmount(amount1+amount2);
+
+
+
+
                             this.basket.getProducts().remove(key);
                             isAsking = false;
                             break;
@@ -149,6 +157,9 @@ class CustomerController {
                     this.basket.getProducts().forEach((key, value) -> {
                         if (key.getId() == prodId) {
                             basket.getProducts().replace(key, quantity);
+                            int amount = productList.getProductById(prodId).getAmount();
+
+                            productList.getProductById(prodId).setAmount(amount+quantity);
                         }
 
                     });
