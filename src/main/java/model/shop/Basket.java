@@ -2,6 +2,7 @@ package model.shop;
 
 import dao.sql.BasketsDAO;
 import model.services.BasketService;
+import model.shop.abc.ProductList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -79,12 +80,24 @@ public class Basket {
 
         BasketsDAO basketsDAO = new BasketsDAO();
 
-        this.products.forEach((product, amount) -> {
+        this.products.forEach((product, amount) -> basketsDAO.create(userId, product, amount));
 
 
-            basketsDAO.create(userId, product, amount);
-        });
+    }
 
+    public void updateProductList(ProductList productList) {
+//        System.out.println(this.products.size());
+        if (!this.products.isEmpty()) {
+            productList.getProducts().forEach((product) -> {
+
+                if (this.products.get(product) != null) {
+
+                    int amount = product.getAmount();
+                    product.setAmount(amount - this.products.get(product));
+
+                }
+            });
+        }
 
     }
 }

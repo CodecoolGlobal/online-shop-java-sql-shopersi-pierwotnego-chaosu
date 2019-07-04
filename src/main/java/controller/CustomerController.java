@@ -32,6 +32,8 @@ class CustomerController {
         this.basket.setBasketFromDB();
         this.productList = new ProductList(new ProductDAO().read());
         this.ordersList = new OrdersList(new OrdersDAO().readOrders(user));
+        this.basket.updateProductList(this.productList);
+
     }
 
 
