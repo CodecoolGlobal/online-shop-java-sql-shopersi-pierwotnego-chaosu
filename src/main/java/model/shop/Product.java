@@ -54,6 +54,7 @@ public class Product {
     }
 
     public String getCategoryName(){
+
         return new CategoryList().getCategoryNameById(this.category);
     }
 
