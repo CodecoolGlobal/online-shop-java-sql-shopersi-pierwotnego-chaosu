@@ -227,9 +227,8 @@ public class Display {
 
 
     public static String askForString(String question) {
-        System.out.println(question);
         Scanner scanner = new Scanner(System.in);
-        String out = scanner.next();
+        String out = scanner.nextLine();
         return out;
     }
 
