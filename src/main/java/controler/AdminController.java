@@ -1,5 +1,6 @@
 package controler;
 
+import dao.sql.CategoryDAO;
 import dao.sql.OrdersDAO;
 import dao.sql.ProductDAO;
 import dao.sql.UsersDAO;
@@ -102,7 +103,7 @@ public class AdminController {
         double price = Display.askForDouble("Product price: ");
         int amount = Display.askForInt("Amount: ");
         CategoryList categoryList = new CategoryList();
-        Display.printMessage(categoryList.toString());
+        Display.printCategories(categoryList);
         String idOfCategory = Display.askForString("Category id: ");
         while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
             Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
@@ -143,7 +144,7 @@ public class AdminController {
 
             System.out.print("\nNew category id: ");
             CategoryList categoryList = new CategoryList();
-            Display.printMessage(categoryList.toString());
+            Display.printCategories(categoryList);
 //            String idOfCategory = Display.askForString("Category id: ");
             String idOfCategory = sc2.nextLine();
             while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
@@ -170,7 +171,8 @@ public class AdminController {
     }
 
     private void showCategories(){
-        System.out.println(new CategoryList().toString());
+        CategoryList categoryList = new CategoryList();
+        Display.printCategories(categoryList);
     }
 
     private void addNewCategory(){
