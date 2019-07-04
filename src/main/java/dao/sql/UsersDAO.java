@@ -97,6 +97,34 @@ public class UsersDAO implements DAO {
         return newUser;
     }
 
+    public User readUser(String userName, String userPassword){
+        Connection c = null;
+        User newUser = new User();
+        try {
+            DataSource ds = new DataSource();
+            ResultSet rs = ds.executeQuery("SELECT * FROM USERS WHERE \"name\" LIKE '"+userName+"' AND \"password\" Like '"+userPassword+"';");
+            if (rs.next() && rs.getString("name").equals(userName)) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                int isAdmin = rs.getInt("isAdmin");
+
+                newUser.setAdmin(isAdmin);
+                newUser.setName(name);
+                newUser.setPassowrd(password);
+                newUser.setId(id);
+
+                //                list.add((new User(name,password,isAdmin)));
+            }
+            rs.close();
+
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        };
+        return newUser;
+    }
+
     public void update() {
 
     }

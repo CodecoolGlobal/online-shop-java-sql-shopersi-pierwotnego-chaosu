@@ -46,18 +46,13 @@ public class LogInController {
     public void logInUser(){
         Scanner scanner = new Scanner(System.in);
         Display.printMessage("User name: ");
-        String name = scanner.next();
-        if (new UsersDAO().readUser(name).getName()==null){
-            Display.printMessage("There is no such user in the database.");
+        String name = scanner.nextLine();
+        Display.printMessage("User password: ");
+        String password = scanner.nextLine();
+        if (new UsersDAO().readUser(name,password).getName()==null){
+            Display.printMessage("Wrong username or password.");
         } else {
-            Display.printMessage("User password: ");
-            String password = scanner.next();
-            User user = new UsersDAO().readUser(name);
-            if (user.getName() != null && !user.getPassowrd().equals(password)) {
-                Display.printMessage("Wrong password... ");
-
-            }
-            if (user.getName() != null && user.getPassowrd().equals(password)) {
+            User user = new UsersDAO().readUser(name,password);
                 if (user.getAdmin() == 1) {
                     AdminController adminController = new AdminController(user);
                     adminController.run();
@@ -65,7 +60,7 @@ public class LogInController {
                     CustomerController customerController = new CustomerController(user);
                     customerController.run();
                 }
-            }
+//            }
         }
     }
 
