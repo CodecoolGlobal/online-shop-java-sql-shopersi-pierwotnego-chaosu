@@ -176,6 +176,12 @@ public class AdminController {
     private void addNewCategory(){
 
         String name = Display.askForString("Category name: ");
+        CategoryList listofCategory = new CategoryList();
+        for (Category element: listofCategory.getCategoryList()) {
+            while (name.equals(element.getName())){
+                name = Display.askForString("This category already exist. create another one: ");
+            }
+        }
         Category category = new Category(name);
         category.createInDB();
     }

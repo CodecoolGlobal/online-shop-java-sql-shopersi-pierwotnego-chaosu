@@ -13,7 +13,9 @@ import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
 import model.shop.lists.UserList;
 
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Display {
@@ -227,6 +229,7 @@ public class Display {
 
 
     public static String askForString(String question) {
+        System.out.println(question);
         Scanner scanner = new Scanner(System.in);
         String out = scanner.nextLine();
         return out;

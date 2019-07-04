@@ -193,6 +193,9 @@ public class CustomerController {
             }
             basket.getProducts().clear();
             new BasketsDAO().delete(user);
+            this.productList = new ProductList(new ProductDAO().read());
+            Display.printMessage("You have placed your order succesfully.");
+
         } else {
             Display.printMessage("Your basket is empty. Add items to basket.");
         }
