@@ -167,7 +167,7 @@ public class Display {
         for (Product product : productList) {
 
 
-            if (product.isAvailable() && !user.isAdmin()) {
+            if (product.isOnStock() && !user.isAdmin()) {
 
                 String prodId = String.format(formater1, product.getId());
                 String prodName = String.format(formater2, product.getName());

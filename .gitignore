@@ -7,4 +7,5 @@ target/
 *.xml
 .classpath
 launch.json
-src/main/resources/onlineshop.db
+src/main/resources/onlineshop.dbonlineshop.db
+onlineshop.sqbpro

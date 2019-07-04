@@ -74,7 +74,7 @@ public class Product {
     public void setAmount(int amount) {
         this.amount = amount;
 //        update();
-        if (this.amount <= 0) setAvailable(false);
+        if (this.amount <= 0) setOnStock(false);
     }
 
     public void setAvailable(boolean available) {
@@ -82,6 +82,10 @@ public class Product {
 //        update();
     }
 
+    public void setOnStock(boolean onStock) {
+        isOnStock = onStock;
+//        update();
+    }
     public void setCategory(int category) {
         this.category = category;
 //        update();

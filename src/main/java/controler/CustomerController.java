@@ -69,7 +69,6 @@ public class CustomerController {
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
                     addProdToB();
-
                     break;
                 }
                 case 4: {
@@ -160,7 +159,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
+            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isOnStock();
 
             if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
@@ -168,7 +167,7 @@ public class CustomerController {
                 if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
-//                    this.productList.removeAmountById(prodId, quantity);
+                    this.productList.removeAmountById(prodId, quantity);
                     isAsking = false;
                 } else System.out.println("Incorrect Amount");
 
