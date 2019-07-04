@@ -242,7 +242,7 @@ public class Display {
     }
 
 
-    public static void prompt() {
+    public static void pressForNexxt() {
         try {
             System.in.read();
         } catch (IOException e) {
