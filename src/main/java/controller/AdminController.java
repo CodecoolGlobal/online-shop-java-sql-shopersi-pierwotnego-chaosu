@@ -42,6 +42,7 @@ class AdminController {
 
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
+                    Display.pressForNexxt();
                     break;
                 }
 
@@ -68,6 +69,8 @@ class AdminController {
 
                     Display.clearScreen();
                     showCategories();
+                    Display.pressForNexxt();
+
                     break;
                 }
 
@@ -80,13 +83,16 @@ class AdminController {
 
                 case 7: {
                     Display.clearScreen();
-                    showCategories();
+//                    showCategories();
                     editCategory();
                     break;
                 }
 
                 case 9: {
+                    Display.clearScreen();
                     Display.printOngoingOrders(userList, productList);
+                    Display.pressForNexxt();
+
                     break;
                 }
 
