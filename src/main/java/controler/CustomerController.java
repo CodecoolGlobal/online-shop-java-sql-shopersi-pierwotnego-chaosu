@@ -81,6 +81,7 @@ public class CustomerController {
                     Display.printBasket(basket);
                     editBasket();
                     Display.prompt();
+                    break;
                 }
 
                 case 7: {

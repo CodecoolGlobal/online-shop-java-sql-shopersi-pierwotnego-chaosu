@@ -11,15 +11,18 @@ public class Product {
     private double price;
     private int amount;
 
+    private boolean isOnStock;
+
     private boolean isAvailable;
     private int category;
 
-    public Product(String name, double price, int amount, boolean isAvailable, int category) {
+    public Product(String name, double price, int amount, boolean isAvailable, int category, boolean isOnStock) {
         this.name = name;
         this.price = price;
         this.amount = amount;
         this.category = category;
         this.isAvailable = isAvailable;
+        this.isOnStock = isOnStock;
     }
 
     public int getId() {
@@ -40,6 +43,10 @@ public class Product {
 
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    public boolean isOnStock() {
+        return isOnStock;
     }
 
     public int getCategory() {

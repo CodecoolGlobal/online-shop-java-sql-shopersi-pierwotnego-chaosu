@@ -102,7 +102,8 @@ public class AdminController {
         double price = Display.askForDouble("Product price: ");
         int amount = Display.askForInt("Amount: ");
         int categoryId = Display.askForInt("Category id: ");
-        Product product = new Product(name,price,amount,amount > 0,categoryId);
+        boolean onStock = Display.askForString("Is on Stock y/n").equals("y");
+        Product product = new Product(name,price,amount,amount > 0,categoryId, onStock);
         productList.add(product);
         product.create();
         }
