@@ -35,8 +35,6 @@ public class Basket {
         this.products.remove(product);
     }
 
-    ;
-
     public Double countTotalValue() {
         Double totalValue = 0.0;
 

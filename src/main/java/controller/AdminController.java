@@ -13,20 +13,20 @@ import view.Display;
 
 import java.util.Scanner;
 
-public class AdminController {
+class AdminController {
     private final User user;
     private ProductList productList;
     private final UserList userList;
 //    private OrdersList ordersList;
 
-    public AdminController(User user) {
+    AdminController(User user) {
         this.user = user;
         this.productList = new ProductList(new ProductDAO().read());
         this.userList = new UserList(new UsersDAO().read());
 
     }
 
-    public void run() {
+    void run() {
         boolean isRunning = true;
         //Scanner scanner = new Scanner(System.in);
         while (isRunning) {

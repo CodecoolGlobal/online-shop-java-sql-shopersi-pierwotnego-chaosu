@@ -69,7 +69,7 @@ public class OrdersDAO implements DAO {
             System.exit(0);
         }finally{
             ds.close();
-        };
+        }
         return list;
     }
 
@@ -133,7 +133,7 @@ public class OrdersDAO implements DAO {
             System.exit(0);
         }finally{
             ds.close();
-        };
+        }
         return list;
     }
 }

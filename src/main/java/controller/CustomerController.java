@@ -19,14 +19,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
 
-public class CustomerController {
+class CustomerController {
 
     private User user;
     private Basket basket;
     private ProductList productList;
     private OrdersList ordersList;
 
-    public CustomerController(User user) {
+    CustomerController(User user) {
         this.user = user;
         this.basket = new Basket(user.getId());
         this.productList = new ProductList(new ProductDAO().read());
@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
 
-    public void run() {
+    void run() {
 
         boolean isRunning = true;
 
@@ -92,7 +92,7 @@ public class CustomerController {
                 }
 
                 case 9: {
-                    this.basket.setBasketFromDB();
+                    basket.setBasketFromDB();
                     break;
                 }
                 case 0: {
@@ -112,7 +112,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            final boolean isValid = productList.isIdValid(prodId); //&& productList.getProductById(prodId).isAvailable();
+            boolean isValid = productList.isIdValid(prodId); //&& productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("Set new amount of items / 0 to delete.");
@@ -174,7 +174,7 @@ public class CustomerController {
         }
     }
 
-    public void makeNewOrder() {
+    private void makeNewOrder() {
         if (!basket.getProducts().isEmpty()) {
 
             new OrdersDAO().create(user);
@@ -212,7 +212,7 @@ public class CustomerController {
         Scanner scanner = new Scanner(System.in);
 
         String out = scanner.next();
-        while (!out.matches("[0-"+String.valueOf(categoryList.getCategoryList().size())+"]+")) {
+        while (!out.matches("[0-"+ categoryList.getCategoryList().size() +"]+")) {
             Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
             out = scanner.next();
             if (out.equals("0")) break;

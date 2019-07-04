@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ProductDAO implements DAO {
-    public void create(){};
+    public void create(){}
 
     public void create(Product product) {
 

@@ -64,8 +64,8 @@ public class UsersDAO implements DAO {
             System.exit(0);
         }finally{
                 ds.close();
-            };
-        return list;
+            }
+            return list;
     }
 
 
@@ -93,7 +93,7 @@ public class UsersDAO implements DAO {
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
-        };
+        }
         return newUser;
     }
 
@@ -121,7 +121,7 @@ public class UsersDAO implements DAO {
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
-        };
+        }
         return newUser;
     }
 
