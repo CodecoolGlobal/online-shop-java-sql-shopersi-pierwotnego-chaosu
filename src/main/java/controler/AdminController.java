@@ -97,21 +97,31 @@ public class AdminController {
     }
 
 
-    private void addNewProduct(){
+    private void addNewProduct() {
         String name = Display.askForString("Product name: ");
         double price = Display.askForDouble("Product price: ");
         int amount = Display.askForInt("Amount: ");
-        int categoryId = Display.askForInt("Category id: ");
-        Product product = new Product(name,price,amount,amount > 0,categoryId);
-        productList.add(product);
-        product.create();
+        CategoryList categoryList = new CategoryList();
+        Display.printMessage(categoryList.toString());
+        String idOfCategory = Display.askForString("Category id: ");
+        while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
+            Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
+            idOfCategory = Display.askForString("Category id: ");
+            if (idOfCategory.equals("0")) break;
         }
+        if (!idOfCategory.equals("0")) {
+            int categoryId = Integer.valueOf(idOfCategory);
+            Product product = new Product(name, price, amount, amount > 0, categoryId);
+            productList.add(product);
+            product.create();
+        }
+    }
 
     private void editProduct(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Product id: ");
         int id = scanner.nextInt();
-        if (productList.isIdValid(id)){
+        if (productList.isIdValid(id)) {
 
             Scanner sc2 = new Scanner(System.in);
             Product product = productList.getProductById(id);
@@ -132,11 +142,19 @@ public class AdminController {
             if (!amount.equals("")) product.setAmount(Integer.valueOf(amount));
 
             System.out.print("\nNew category id: ");
-            String categoryId = sc2.nextLine();
-
-            if (!categoryId.equals("")) product.setCategory(Integer.valueOf(categoryId));
-
-            product.update();
+            CategoryList categoryList = new CategoryList();
+            Display.printMessage(categoryList.toString());
+//            String idOfCategory = Display.askForString("Category id: ");
+            String idOfCategory = sc2.nextLine();
+            while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
+                if (idOfCategory.equals("") || idOfCategory.equals("0")) break;
+                Display.printMessage("There is no such category. Choose correct Category ID or 0 to stop editing product:");
+                idOfCategory = Display.askForString("Category id: ");
+            }
+            if (!idOfCategory.equals("0")) {
+                if (!idOfCategory.equals("")) product.setCategory(Integer.valueOf(idOfCategory));
+                product.update();
+            }
         }
     }
 
