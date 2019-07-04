@@ -1,6 +1,6 @@
 package model.shop;
 
-import services.BasketService;
+import model.services.BasketService;
 
 import java.util.HashMap;
 import java.util.List;

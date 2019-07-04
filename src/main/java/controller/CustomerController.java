@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 
 import dao.sql.BasketsDAO;
@@ -11,12 +11,9 @@ import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
 import view.Display;
 import model.shop.User;
-import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
 //import model.shop.lists.ProductList;
-import view.Display;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Scanner;
@@ -179,6 +176,7 @@ public class CustomerController {
 
     public void makeNewOrder() {
         if (!basket.getProducts().isEmpty()) {
+
             new OrdersDAO().create(user);
             ordersList.setOrders(new OrdersDAO().readOrders(user));
             Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);

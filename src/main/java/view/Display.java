@@ -2,7 +2,7 @@ package view;
 
 import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
-import model.controller.FileReaderForDispaly;
+import model.display.FileReaderForDispaly;
 import model.shop.*;
 import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
@@ -10,9 +10,7 @@ import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
 import model.shop.lists.UserList;
 
-import javax.sound.midi.Soundbank;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Display {

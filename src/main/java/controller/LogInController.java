@@ -1,11 +1,9 @@
-package controler;
+package controller;
 
 import dao.sql.UsersDAO;
-import model.shop.Admin;
 import model.shop.User;
 import view.Display;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class LogInController {
