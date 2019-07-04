@@ -116,6 +116,7 @@ public class Display {
         int form3 = "Price".length();
         int form4 = "Amount".length();
         int form5 = "Category".length();
+        int form6 = "Availability".length();
 
 
         for (Product prod : productList) {
@@ -125,12 +126,14 @@ public class Display {
             int form3a = String.valueOf(prod.getPrice()).length();
             int form4a = String.valueOf(prod.getAmount()).length();
             int form5a = String.valueOf(prod.getCategoryName()).length();
+            int form6a = (prod.isAvailable() ? "available":"Not Available").length();
 
             if (form1 <= form1a) form1 = form1a;
             if (form2 <= form2a) form2 = form2a;
             if (form3 <= form3a) form3 = form3a;
             if (form4 <= form4a) form4 = form4a;
             if (form5 <= form5a) form5 = form5a;
+            if (form6 <= form6a) form6 = form6a;
 
         }
         String formater1 = "%" + form1 + "s";
@@ -138,6 +141,7 @@ public class Display {
         String formater3 = "%" + form3 + "s";
         String formater4 = "%" + form4 + "s";
         String formater5 = "%" + form5 + "s";
+        String formater6 = "%" + form6 + "s";
 
 
         String output = "";
@@ -148,9 +152,9 @@ public class Display {
         String l3 = multi(form3, "─");
         String l4 = multi(form4, "─");
         String l5 = multi(form5, "─");
+        String l6 = multi(form6, "─");
 
-
-        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 + "┐\n";
+        output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 +"┬" + l6 + "┐\n";
 
 
         String prodIdH = String.format(formater1, "Product ID");
@@ -158,23 +162,28 @@ public class Display {
         String prodPriceH = String.format(formater3, "Price");
         String prodAmountH = String.format(formater4, "Amount");
         String prodCategoryH = String.format(formater5, "Category");
+        String prodAvailabilityH = String.format(formater6, "Availability");
 
-        output += "│" + prodIdH + "│" + prodNameH + "│" + prodPriceH + "│" + prodAmountH + "│" + prodCategoryH + "│\n";
+        output += "│" + prodIdH + "│" + prodNameH + "│" + prodPriceH + "│" + prodAmountH + "│" +
+                    prodCategoryH +  "│" + prodAvailabilityH +  "│\n";
 
-        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┼" + l4 + "┼" + l5 + "┤\n";
+        output += "├" + l1 + "┼" + l2 + "┼" + l3 + "┼" + l4 + "┼" + l5 +"┼" + l6 + "┤\n";
 
         for (Product product : productList) {
 
 
-            if (product.isAvailable() && !user.isAdmin()) {
+            if (product.isOnStock() && !user.isAdmin()) {
 
                 String prodId = String.format(formater1, product.getId());
                 String prodName = String.format(formater2, product.getName());
                 String prodPrice = String.format(formater3, product.getPrice());
                 String prodAmount = String.format(formater4, product.getAmount());
                 String prodCategory = String.format(formater5, product.getCategoryName());
+                String prodIsAvailable = String.format(formater6,product.isAvailable() ? "available":"Not Available");
 
-                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│\n";
+
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" +
+                        prodAmount + "│" + prodCategory + "│" + prodIsAvailable +"│" + "\n";
             } else if (user.isAdmin()) {
 
                 String prodId = String.format(formater1, product.getId());
@@ -182,14 +191,16 @@ public class Display {
                 String prodPrice = String.format(formater3, product.getPrice());
                 String prodAmount = String.format(formater4, product.getAmount());
                 String prodCategory = String.format(formater5, product.getCategoryName());
-                String prodIsAvailable = String.valueOf(product.isAvailable());
+                String prodIsAvailable = String.format(formater6,product.isAvailable() ? "available":"Not Available");
+                String prodIsOnStock = product.isOnStock() ? "onStock":"EMPTY";
 
-                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" + prodAmount + "│" + prodCategory + "│" + prodIsAvailable + "\n";
+                output += "│" + prodId + "│" + prodName + "│" + prodPrice + "│" +
+                        prodAmount + "│" + prodCategory + "│" + prodIsAvailable +"│" + prodIsOnStock +"\n";
 
             }
         }
 
-        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┴" + l4 + "┴" + l5 + "┘\n";
+        output += "└" + l1 + "┴" + l2 + "┴" + l3 + "┴" + l4 + "┴" + l5 +"┴" + l6 + "┘\n";
 
         System.out.println(output);
 
@@ -267,6 +278,7 @@ public class Display {
             for (OrderItem orderItem : orderedItemsList.getItems()) {
                 Product product = products.getProductById(orderItem.getItemId());
                 product.setAmount(orderItem.getAmount());
+                product.setOnStock(true);
                 productsInOrder.add(product);
             }
             printProductTable(productsInOrder, user);

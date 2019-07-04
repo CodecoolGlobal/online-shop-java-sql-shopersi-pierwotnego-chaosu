@@ -16,8 +16,8 @@ public class ProductDAO implements DAO {
     public void create(Product product) {
 
         try (Connection c = new DataSource().getConnection()) {
-            String query = " insert into products (name, price, amount, isAvailable, categoryId)"
-                    + " values (?, ?, ?, ?, ?)";
+            String query = " insert into products (name, price, amount, isAvailable, categoryId, isOnStock)"
+                    + " values (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStmt = c.prepareStatement(query);
             preparedStmt.setString(1, product.getName());
@@ -25,7 +25,7 @@ public class ProductDAO implements DAO {
             preparedStmt.setInt(3, product.getAmount());
             preparedStmt.setInt(4, product.isAvailable() ? 1 : 0);
             preparedStmt.setInt(5, product.getCategory());
-
+            preparedStmt.setInt(6, product.isOnStock() ? 1 : 0);
             preparedStmt.execute();
 
         } catch (SQLException e) {
@@ -46,7 +46,9 @@ public class ProductDAO implements DAO {
                 int amount = rs.getInt("amount");
                 boolean isAvailable = (rs.getInt("isAvailable") != 0);
                 int category = (rs.getInt("categoryId"));
-                Product product = new Product(name, price, amount, isAvailable, category);
+                boolean isOnStock = (rs.getInt("isOnStock") != 0);
+
+                Product product = new Product(name, price, amount, isAvailable, category, isOnStock);
                 product.setId(id);
                 list.add(product);
             }
@@ -64,11 +66,12 @@ public class ProductDAO implements DAO {
 
         ArrayList<Product> list = new ArrayList<Product>();
         int available = product.isAvailable() ?  1 : 0;
-        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
+        int onStock = product.isOnStock() ? 1 : 0;
+//        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
         try (Connection c = new DataSource().getConnection())
         {
 
-            String query = "UPDATE products SET name = ?, price = ?, amount= ? , isAvailable = ? , categoryId = ? WHERE id = ?";
+            String query = "UPDATE products SET name = ?, price = ?, amount= ? , isAvailable = ? , categoryId = ?, isOnStock = ? WHERE id = ?";
             PreparedStatement preparedStmt = c.prepareStatement(query);
 
             preparedStmt.setString(1, product.getName());
@@ -76,7 +79,8 @@ public class ProductDAO implements DAO {
             preparedStmt.setInt(3, product.getAmount());
             preparedStmt.setInt(4, available);
             preparedStmt.setInt(5, product.getCategory());
-            preparedStmt.setInt(6, product.getId());
+            preparedStmt.setInt(6, onStock);
+            preparedStmt.setInt(7, product.getId());
 
             preparedStmt.executeUpdate();
 

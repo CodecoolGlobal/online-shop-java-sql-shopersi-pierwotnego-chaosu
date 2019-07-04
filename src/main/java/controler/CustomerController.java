@@ -69,7 +69,6 @@ public class CustomerController {
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
                     addProdToB();
-
                     break;
                 }
                 case 4: {
@@ -81,6 +80,7 @@ public class CustomerController {
                     Display.printBasket(basket);
                     editBasket();
                     Display.prompt();
+                    break;
                 }
 
                 case 7: {
@@ -159,7 +159,7 @@ public class CustomerController {
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isAvailable();
+            boolean isValid = productList.isIdValid(prodId) && productList.getProductById(prodId).isOnStock();
 
             if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
@@ -167,7 +167,7 @@ public class CustomerController {
                 if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
-//                    this.productList.removeAmountById(prodId, quantity);
+                    this.productList.removeAmountById(prodId, quantity);
                     isAsking = false;
                 } else System.out.println("Incorrect Amount");
 
@@ -182,15 +182,18 @@ public class CustomerController {
             ordersList.setOrders(new OrdersDAO().readOrders(user));
             Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
             new OrdersItemsDAO().create(basket, newOrder);
-            for (Product productFromBasket : basket.getProducts().keySet()) {
-                for (Product productUpdated : productList.getProducts()) {
-                    if (productFromBasket.getId() == productUpdated.getId()) {
-                        int amount = productUpdated.getAmount() - basket.getProducts().get(productUpdated);
-                        productUpdated.setAmount(amount);
-                        new ProductDAO().update(productUpdated);
-                    }
-                }
-            }
+            this.productList.updateAllProductsInDataBase();
+
+
+//            for (Product productFromBasket : basket.getProducts().keySet()) {
+//                for (Product productUpdated : productList.getProducts()) {
+//                    if (productFromBasket.getId() == productUpdated.getId()) {
+//                        int amount = productUpdated.getAmount() - basket.getProducts().get(productUpdated);
+//                        productUpdated.setAmount(amount);
+//                        new ProductDAO().update(productUpdated);
+//                    }
+//                }
+//            }
             basket.getProducts().clear();
             new BasketsDAO().delete(user);
             this.productList = new ProductList(new ProductDAO().read());

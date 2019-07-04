@@ -22,7 +22,7 @@ public class AdminController {
     private UserList userList;
 //    private OrdersList ordersList;
 
-    public AdminController(User user){
+    public AdminController(User user) {
         this.user = user;
         this.productList = new ProductList(new ProductDAO().read());
         this.userList = new UserList(new UsersDAO().read());
@@ -81,7 +81,7 @@ public class AdminController {
                 }
 
                 case 9: {
-                    Display.printOngoingOrders(userList , productList);
+                    Display.printOngoingOrders(userList, productList);
                     break;
                 }
 
@@ -112,13 +112,14 @@ public class AdminController {
         }
         if (!idOfCategory.equals("0")) {
             int categoryId = Integer.valueOf(idOfCategory);
-            Product product = new Product(name, price, amount, amount > 0, categoryId);
+            boolean onStock = amount>0;      //Display.askForString("Is on Stock y/n").equals("y");
+            Product product = new Product(name, price, amount, amount > 0, categoryId, onStock);
             productList.add(product);
             product.create();
         }
     }
 
-    private void editProduct(){
+    private void editProduct() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Product id: ");
         int id = scanner.nextInt();
@@ -143,9 +144,9 @@ public class AdminController {
             if (!amount.equals("")) product.setAmount(Integer.valueOf(amount));
 
             System.out.print("\nNew category id: ");
+
             CategoryList categoryList = new CategoryList();
             Display.printCategories(categoryList);
-//            String idOfCategory = Display.askForString("Category id: ");
             String idOfCategory = sc2.nextLine();
             while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
                 if (idOfCategory.equals("") || idOfCategory.equals("0")) break;
@@ -159,41 +160,36 @@ public class AdminController {
         }
     }
 
-    private void deactivateAProduct(){
+    private void deactivateAProduct() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Product id: ");
         int id = sc.nextInt();
-        if (productList.isIdValid(id)){
+        if (productList.isIdValid(id)) {
             Product product = productList.getProductById(id);
             product.setAvailable(!product.isAvailable());
             product.update();
         }
     }
 
+
     private void showCategories(){
         CategoryList categoryList = new CategoryList();
         Display.printCategories(categoryList);
     }
 
-    private void addNewCategory(){
+    private void addNewCategory() {
 
         String name = Display.askForString("Category name: ");
-        CategoryList listofCategory = new CategoryList();
-        for (Category element: listofCategory.getCategoryList()) {
-            while (name.equals(element.getName())){
-                name = Display.askForString("This category already exist. create another one: ");
-            }
-        }
         Category category = new Category(name);
         category.createInDB();
     }
 
-    private void editCategory(){
+    private void editCategory() {
         showCategories();
         CategoryList list = new CategoryList();
         int id = Display.askForInt("Category id: ");
         Category category = list.getCategoryById(id);
-        String name = Display.askForString("Change " + category.getName()  +" into: ");
+        String name = Display.askForString("Change " + category.getName() + " into: ");
         category.setName(name);
         category.updateInDB();
     }

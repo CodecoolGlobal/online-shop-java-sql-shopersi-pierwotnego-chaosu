@@ -11,15 +11,18 @@ public class Product {
     private double price;
     private int amount;
 
+    private boolean isOnStock;
+
     private boolean isAvailable;
     private int category;
 
-    public Product(String name, double price, int amount, boolean isAvailable, int category) {
+    public Product(String name, double price, int amount, boolean isAvailable, int category, boolean isOnStock) {
         this.name = name;
         this.price = price;
         this.amount = amount;
         this.category = category;
         this.isAvailable = isAvailable;
+        this.isOnStock = isOnStock;
     }
 
     public int getId() {
@@ -42,11 +45,16 @@ public class Product {
         return isAvailable;
     }
 
+    public boolean isOnStock() {
+        return isOnStock;
+    }
+
     public int getCategory() {
         return category;
     }
 
     public String getCategoryName(){
+
         return new CategoryList().getCategoryNameById(this.category);
     }
 
@@ -67,7 +75,7 @@ public class Product {
     public void setAmount(int amount) {
         this.amount = amount;
 //        update();
-        if (this.amount <= 0) setAvailable(false);
+        if (this.amount <= 0) setOnStock(false);
     }
 
     public void setAvailable(boolean available) {
@@ -75,6 +83,10 @@ public class Product {
 //        update();
     }
 
+    public void setOnStock(boolean onStock) {
+        isOnStock = onStock;
+//        update();
+    }
     public void setCategory(int category) {
         this.category = category;
 //        update();
