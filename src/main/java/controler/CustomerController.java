@@ -163,13 +163,14 @@ public class CustomerController {
 
             if (isValid) {
                 int quantity = Display.askForInt("How many Items?");
-
-                if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()) {
+                if (quantity==0)isAsking=false;
+                if (quantity > 0 && quantity <= productList.getProductById(prodId).getAmount()
+                        && productList.getProductById(prodId).isAvailable()) {
 
                     basket.addProductToBasket(prodId, this.productList.getProducts(), quantity);
                     this.productList.removeAmountById(prodId, quantity);
                     isAsking = false;
-                } else System.out.println("Incorrect Amount");
+                } else System.out.println("Incorrect Amount or product is no longer available");
 
             } else System.out.println("Incorrect Id");
 
