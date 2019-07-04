@@ -1,5 +1,6 @@
 package dao.sql;
 
+import model.shop.Basket;
 import model.shop.Product;
 import model.shop.User;
 
@@ -10,17 +11,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BasketsDAO implements DAO {
+public class BasketsDAO  {
 
 
     private int userId;
 
-    public void create() {
-
-    }
 
     public ArrayList<HashMap<Product, Integer>> read() {
-//        Connection c = null;
         HashMap<Product, Integer> hM = new HashMap<>();
         ArrayList<HashMap<Product, Integer>> list = new ArrayList<>();
         try {
@@ -31,8 +28,6 @@ public class BasketsDAO implements DAO {
 
                 int amountB = res.getInt("amount");
 
-
-//                for (int i = 0; i < amountB; i++) {
 
 
                 int productID = res.getInt("productId");
@@ -49,13 +44,12 @@ public class BasketsDAO implements DAO {
                     boolean isOnStock = (rs.getInt("isOnStock") != 0);
                     Product product = new Product(name, price, amount, isAvailable, category, isOnStock);
                     product.setId(id);
-//                    list.add(product);
                     hM.put(product,amountB);
                 }
                 list.add(hM);
                 ds.close();
             }
-//            }
+
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
@@ -64,11 +58,32 @@ public class BasketsDAO implements DAO {
 
     }
 
-    public void update() {
+    public void create(int userId, Product product, int amount) {
+        try (Connection c = new DataSource().getConnection())
+        {
+
+            String query = " insert into baskets (userId, productId, amount)"
+                    + " values (?, ?, ?)";
+
+            PreparedStatement preparedStmt = c.prepareStatement(query);
+
+            preparedStmt.setInt(1, userId);
+            preparedStmt.setInt(2, product.getId());
+            preparedStmt.setInt(3, amount);
+
+            preparedStmt.execute();
+
+        }
+        catch (SQLException e)
+        {
+            System.err.println("SQL exception when updating. ");
+            System.err.println(e.getMessage());
+        }
 
     }
 
-    public void delete() {}
+
+
 
     public void delete(User user) {
         try (Connection c = new DataSource().getConnection())

@@ -29,6 +29,7 @@ class CustomerController {
     CustomerController(User user) {
         this.user = user;
         this.basket = new Basket(user.getId());
+        this.basket.setBasketFromDB();
         this.productList = new ProductList(new ProductDAO().read());
         this.ordersList = new OrdersList(new OrdersDAO().readOrders(user));
     }
@@ -79,7 +80,10 @@ class CustomerController {
                     Display.prompt();
                     break;
                 }
-
+                case 6: {
+                    saveBasket();
+                    break;
+                }
                 case 7: {
                     makeNewOrder();
                     break;
@@ -91,10 +95,10 @@ class CustomerController {
                     break;
                 }
 
-                case 9: {
-                    basket.setBasketFromDB();
-                    break;
-                }
+//                case 9: {
+//                    basket.setBasketFromDB();
+//                    break;
+//                }
                 case 0: {
                     isRunning = false;
                     break;
@@ -104,6 +108,10 @@ class CustomerController {
 
             }
         }
+    }
+
+    private void saveBasket() {
+        this.basket.updateToDB();
     }
 
 

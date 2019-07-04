@@ -3,8 +3,7 @@
 3. Add new product to basket
 4. Show basket
 5. Edit basket
-6. Set basket to Data Base
+6. Save basket
 7. Place order
 8. Show orders
-9. Set Basket from data base
 0. LOGOUT

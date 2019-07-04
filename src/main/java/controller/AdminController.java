@@ -51,11 +51,15 @@ class AdminController {
                 }
 
                 case 3: {
+                    Display.clearScreen();
+                    Display.printProductTable(productList, user);
                     editProduct();
                     break;
                 }
 
                 case 4: {
+                    Display.clearScreen();
+                    Display.printProductTable(productList, user);
                     deactivateAProduct();
                     break;
                 }
@@ -68,11 +72,15 @@ class AdminController {
                 }
 
                 case 6: {
+                    Display.clearScreen();
+                    showCategories();
                     addNewCategory();
                     break;
                 }
 
                 case 7: {
+                    Display.clearScreen();
+                    showCategories();
                     editCategory();
                     break;
                 }
@@ -140,7 +148,7 @@ class AdminController {
 
             if (!amount.equals("")) product.setAmount(Integer.valueOf(amount));
 
-            System.out.print("\nNew category id: ");
+            System.out.println("\nNew category id: ");
 
             CategoryList categoryList = new CategoryList();
             Display.printCategories(categoryList);
