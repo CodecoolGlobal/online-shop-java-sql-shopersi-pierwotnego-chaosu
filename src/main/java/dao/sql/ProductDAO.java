@@ -25,7 +25,7 @@ public class ProductDAO implements DAO {
             preparedStmt.setInt(3, product.getAmount());
             preparedStmt.setInt(4, product.isAvailable() ? 1 : 0);
             preparedStmt.setInt(5, product.getCategory());
-            preparedStmt.setInt(4, product.isOnStock() ? 1 : 0);
+            preparedStmt.setInt(6, product.isOnStock() ? 1 : 0);
             preparedStmt.execute();
 
         } catch (SQLException e) {
@@ -67,7 +67,7 @@ public class ProductDAO implements DAO {
         ArrayList<Product> list = new ArrayList<Product>();
         int available = product.isAvailable() ?  1 : 0;
         int onStock = product.isOnStock() ? 1 : 0;
-        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
+//        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
         try (Connection c = new DataSource().getConnection())
         {
 
@@ -79,8 +79,8 @@ public class ProductDAO implements DAO {
             preparedStmt.setInt(3, product.getAmount());
             preparedStmt.setInt(4, available);
             preparedStmt.setInt(5, product.getCategory());
-            preparedStmt.setInt(6, product.getId());
-            preparedStmt.setInt(4, onStock);
+            preparedStmt.setInt(6, onStock);
+            preparedStmt.setInt(7, product.getId());
 
             preparedStmt.executeUpdate();
 

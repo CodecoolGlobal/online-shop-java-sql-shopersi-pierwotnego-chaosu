@@ -21,7 +21,7 @@ public class AdminController {
     private UserList userList;
 //    private OrdersList ordersList;
 
-    public AdminController(User user){
+    public AdminController(User user) {
         this.user = user;
         this.productList = new ProductList(new ProductDAO().read());
         this.userList = new UserList(new UsersDAO().read());
@@ -80,7 +80,7 @@ public class AdminController {
                 }
 
                 case 9: {
-                    Display.printOngoingOrders(userList , productList);
+                    Display.printOngoingOrders(userList, productList);
                     break;
                 }
 
@@ -97,22 +97,32 @@ public class AdminController {
     }
 
 
-    private void addNewProduct(){
+    private void addNewProduct() {
         String name = Display.askForString("Product name: ");
         double price = Display.askForDouble("Product price: ");
         int amount = Display.askForInt("Amount: ");
-        int categoryId = Display.askForInt("Category id: ");
-        boolean onStock = Display.askForString("Is on Stock y/n").equals("y");
-        Product product = new Product(name,price,amount,amount > 0,categoryId, onStock);
-        productList.add(product);
-        product.create();
+        CategoryList categoryList = new CategoryList();
+        Display.printMessage(categoryList.toString());
+        String idOfCategory = Display.askForString("Category id: ");
+        while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
+            Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
+            idOfCategory = Display.askForString("Category id: ");
+            if (idOfCategory.equals("0")) break;
         }
+        if (!idOfCategory.equals("0")) {
+            int categoryId = Integer.valueOf(idOfCategory);
+            boolean onStock = amount>0;      //Display.askForString("Is on Stock y/n").equals("y");
+            Product product = new Product(name, price, amount, amount > 0, categoryId, onStock);
+            productList.add(product);
+            product.create();
+        }
+    }
 
-    private void editProduct(){
+    private void editProduct() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Product id: ");
         int id = scanner.nextInt();
-        if (productList.isIdValid(id)){
+        if (productList.isIdValid(id)) {
 
             Scanner sc2 = new Scanner(System.in);
             Product product = productList.getProductById(id);
@@ -141,34 +151,34 @@ public class AdminController {
         }
     }
 
-    private void deactivateAProduct(){
+    private void deactivateAProduct() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Product id: ");
         int id = sc.nextInt();
-        if (productList.isIdValid(id)){
+        if (productList.isIdValid(id)) {
             Product product = productList.getProductById(id);
             product.setAvailable(!product.isAvailable());
             product.update();
         }
     }
 
-    private void showCategories(){
+    private void showCategories() {
         System.out.println(new CategoryList().toString());
     }
 
-    private void addNewCategory(){
+    private void addNewCategory() {
 
         String name = Display.askForString("Category name: ");
         Category category = new Category(name);
         category.createInDB();
     }
 
-    private void editCategory(){
+    private void editCategory() {
         showCategories();
         CategoryList list = new CategoryList();
         int id = Display.askForInt("Category id: ");
         Category category = list.getCategoryById(id);
-        String name = Display.askForString("Change " + category.getName()  +" into: ");
+        String name = Display.askForString("Change " + category.getName() + " into: ");
         category.setName(name);
         category.updateInDB();
     }
