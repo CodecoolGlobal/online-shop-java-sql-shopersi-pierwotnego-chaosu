@@ -27,7 +27,6 @@ public class UsersDAO implements DAO {
             preparedStmt.setInt(2, user.getAdmin());
             preparedStmt.setString(3, user.getPassowrd());
 
-            // execute the preparedstatement
             preparedStmt.execute();
 
             c.close();
@@ -57,7 +56,6 @@ public class UsersDAO implements DAO {
                 newUser.setId(id);
                 list.add(newUser);
             }
-            rs.close();
 
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -86,7 +84,6 @@ public class UsersDAO implements DAO {
                 newUser.setPassowrd(password);
                 newUser.setId(id);
 
-                //                list.add((new User(name,password,isAdmin)));
             }
             rs.close();
 
@@ -114,7 +111,6 @@ public class UsersDAO implements DAO {
                 newUser.setPassowrd(password);
                 newUser.setId(id);
 
-                //                list.add((new User(name,password,isAdmin)));
             }
             rs.close();
 

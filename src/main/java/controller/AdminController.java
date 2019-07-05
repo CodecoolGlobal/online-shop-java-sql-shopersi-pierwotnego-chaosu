@@ -83,7 +83,6 @@ class AdminController {
 
                 case 7: {
                     Display.clearScreen();
-//                    showCategories();
                     editCategory();
                     break;
                 }

@@ -11,7 +11,6 @@ public class LogInController {
 
     public void run() {
         boolean isRunning = true;
-        Scanner scanner = new Scanner(System.in);
         while (isRunning) {
             Display.clearScreen();
             Display.showMenu("logMenu");
@@ -34,7 +33,6 @@ public class LogInController {
                     break;
                 }
                 default: {
-//                    Display.clearScreen();
                 }
 
             }

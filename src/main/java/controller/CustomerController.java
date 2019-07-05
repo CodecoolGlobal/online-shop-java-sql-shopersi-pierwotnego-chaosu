@@ -97,10 +97,6 @@ class CustomerController {
                     break;
                 }
 
-//                case 9: {
-//                    basket.setBasketFromDB();
-//                    break;
-//                }
                 case 0: {
                     isRunning = false;
                     break;
@@ -204,20 +200,10 @@ class CustomerController {
             new OrdersItemsDAO().create(basket, newOrder);
             this.productList.updateAllProductsInDataBase();
 
-
-//            for (Product productFromBasket : basket.getProducts().keySet()) {
-//                for (Product productUpdated : productList.getProducts()) {
-//                    if (productFromBasket.getId() == productUpdated.getId()) {
-//                        int amount = productUpdated.getAmount() - basket.getProducts().get(productUpdated);
-//                        productUpdated.setAmount(amount);
-//                        new ProductDAO().update(productUpdated);
-//                    }
-//                }
-//            }
             basket.getProducts().clear();
             new BasketsDAO().delete(user);
             this.productList = new ProductList(new ProductDAO().read());
-            Display.printMessage("You have placed your order succesfully.");
+            Display.printMessage("You have placed your order successfully.");
 
         } else {
             Display.printMessage("Your basket is empty. Add items to basket.");

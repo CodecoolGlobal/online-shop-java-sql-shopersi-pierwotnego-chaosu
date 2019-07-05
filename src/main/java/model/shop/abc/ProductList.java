@@ -42,7 +42,8 @@ public class ProductList {
 
     public Product getProductById(int id){
         //returns the product of given id
-        for (Product product: products
+        for (Product product: products//        setProductsFromDB();
+
         ) { if (product.getId() == id) return product;
         }
         return null;

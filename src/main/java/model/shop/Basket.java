@@ -33,9 +33,6 @@ public class Basket {
         }
     }
 
-    public void removeProduct(Product product) {
-        this.products.remove(product);
-    }
 
     public Double countTotalValue() {
         Double totalValue = 0.0;
@@ -54,7 +51,6 @@ public class Basket {
     public void setBasketFromDB() {
         BasketService basketService = new BasketService(this.userId);
         basketService.setProductsFromDB();
-//        this.products = basketService.getBasket().get(0);
 
 
         if (basketService.getBasket().size() == 0) {
@@ -86,7 +82,6 @@ public class Basket {
     }
 
     public void updateProductList(ProductList productList) {
-//        System.out.println(this.products.size());
         if (!this.products.isEmpty()) {
             productList.getProducts().forEach((product) -> {
 

@@ -13,7 +13,6 @@ public class FileReaderForDispaly {
         List<String> lines = new ArrayList<>();
 
         try{
-//            File file = new File("src/main/resources/menu/logMenu.txt");
             File file = new File("src/main/resources/menu/"+ menuName +".txt");
 
 

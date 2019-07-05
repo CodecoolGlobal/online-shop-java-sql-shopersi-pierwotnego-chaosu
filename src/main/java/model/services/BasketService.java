@@ -12,7 +12,6 @@ public class BasketService {
 
     public BasketService(int userId) {
         this.basket = new ArrayList<>();
-//        setProductsFromDB();
         this.userId = userId;
     }
 
