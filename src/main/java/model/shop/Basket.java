@@ -1,6 +1,8 @@
 package model.shop;
 
-import services.BasketService;
+import dao.sql.BasketsDAO;
+import model.services.BasketService;
+import model.shop.abc.ProductList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +33,6 @@ public class Basket {
         }
     }
 
-    public void removeProduct(Product product) {
-        this.products.remove(product);
-    }
-
-    ;
 
     public Double countTotalValue() {
         Double totalValue = 0.0;
@@ -54,7 +51,13 @@ public class Basket {
     public void setBasketFromDB() {
         BasketService basketService = new BasketService(this.userId);
         basketService.setProductsFromDB();
-        this.products = basketService.getBasket().get(0);
+
+
+        if (basketService.getBasket().size() == 0) {
+            this.products = new HashMap<>();
+        } else {
+            this.products = basketService.getBasket().get(0);
+        }
     }
 
     public HashMap<Product, Integer> getProducts() {
@@ -67,5 +70,29 @@ public class Basket {
                 "userId=" + userId +
                 ", products=" + products +
                 '}';
+    }
+
+    public void updateToDB() {
+
+        BasketsDAO basketsDAO = new BasketsDAO();
+
+        this.products.forEach((product, amount) -> basketsDAO.create(userId, product, amount));
+
+
+    }
+
+    public void updateProductList(ProductList productList) {
+        if (!this.products.isEmpty()) {
+            productList.getProducts().forEach((product) -> {
+
+                if (this.products.get(product) != null) {
+
+                    int amount = product.getAmount();
+                    product.setAmount(amount - this.products.get(product));
+
+                }
+            });
+        }
+
     }
 }

@@ -2,16 +2,14 @@ package dao.sql;
 
 import model.shop.Product;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ProductDAO implements DAO {
-    public void create(){};
+    public void create(){}
 
     public void create(Product product) {
 
@@ -67,7 +65,6 @@ public class ProductDAO implements DAO {
         ArrayList<Product> list = new ArrayList<Product>();
         int available = product.isAvailable() ?  1 : 0;
         int onStock = product.isOnStock() ? 1 : 0;
-//        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
         try (Connection c = new DataSource().getConnection())
         {
 

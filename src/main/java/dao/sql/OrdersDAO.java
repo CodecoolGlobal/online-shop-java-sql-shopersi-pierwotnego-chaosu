@@ -33,7 +33,6 @@ public class OrdersDAO implements DAO {
             preparedStmt.setString(2, newOrder.getStatus());
             preparedStmt.setString(3, newOrder.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-            // execute the preparedstatement
             preparedStmt.execute();
 
             c.close();
@@ -62,14 +61,13 @@ public class OrdersDAO implements DAO {
                 newOrder.setStatusAsSubmit();
                 list.add(newOrder);
             }
-//            rs.close();
 
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }finally{
             ds.close();
-        };
+        }
         return list;
     }
 
@@ -81,7 +79,6 @@ public class OrdersDAO implements DAO {
 
     public void update(User user, Order order) {
 
-//        System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " +  product.getAmount() + " AVAILABLE: " +  available + " CAT: " + product.getCategory() + " ID: " + product.getId());
         try (Connection c = new DataSource().getConnection())
         {
 
@@ -133,7 +130,7 @@ public class OrdersDAO implements DAO {
             System.exit(0);
         }finally{
             ds.close();
-        };
+        }
         return list;
     }
 }

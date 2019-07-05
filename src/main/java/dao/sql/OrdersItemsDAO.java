@@ -36,7 +36,7 @@ public class OrdersItemsDAO implements DAO {
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
-        };
+        }
         return list;
     }
 
@@ -45,8 +45,6 @@ public class OrdersItemsDAO implements DAO {
 
         HashMap<Product, Integer> basketMap = basket.getProducts();
             for (Product product : basketMap.keySet()) {
-    //            int available = product.isAvailable() ? 1 : 0;
-    //            System.out.println(product.getName() + " PRICE: " + product.getPrice() + " AMOUNT: " + product.getAmount() + " AVAILABLE: " + available + " CAT: " + product.getCategory() + " ID: " + product.getId());
                 try (Connection c = new DataSource().getConnection()) {
                     String query = " insert into orders_items (orderId, itemId, amount , price)"
                             + " values (?, ?, ?, ?)";

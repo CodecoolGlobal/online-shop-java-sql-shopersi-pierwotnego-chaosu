@@ -2,7 +2,7 @@ package view;
 
 import dao.sql.OrdersDAO;
 import dao.sql.OrdersItemsDAO;
-import model.controller.FileReaderForDispaly;
+import model.display.FileReaderForDispaly;
 import model.shop.*;
 import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
@@ -10,9 +10,7 @@ import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
 import model.shop.lists.UserList;
 
-import javax.sound.midi.Soundbank;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class Display {
@@ -65,11 +63,11 @@ public class Display {
         String output = "";
 
 
-        String l1 = multi(form1, "─");
-        String l2 = multi(form2, "─");
-        String l3 = multi(form3, "─");
-        String l4 = multi(form4, "─");
-        String l5 = multi(form5, "─");
+        String l1 = multiSign(form1, "─");
+        String l2 = multiSign(form2, "─");
+        String l3 = multiSign(form3, "─");
+        String l4 = multiSign(form4, "─");
+        String l5 = multiSign(form5, "─");
 
 
         output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 + "┐\n";
@@ -147,12 +145,12 @@ public class Display {
         String output = "";
 
 
-        String l1 = multi(form1, "─");
-        String l2 = multi(form2, "─");
-        String l3 = multi(form3, "─");
-        String l4 = multi(form4, "─");
-        String l5 = multi(form5, "─");
-        String l6 = multi(form6, "─");
+        String l1 = multiSign(form1, "─");
+        String l2 = multiSign(form2, "─");
+        String l3 = multiSign(form3, "─");
+        String l4 = multiSign(form4, "─");
+        String l5 = multiSign(form5, "─");
+        String l6 = multiSign(form6, "─");
 
         output += "┌" + l1 + "┬" + l2 + "┬" + l3 + "┬" + l4 + "┬" + l5 +"┬" + l6 + "┐\n";
 
@@ -244,7 +242,7 @@ public class Display {
     }
 
 
-    public static void prompt() {
+    public static void pressForNexxt() {
         try {
             System.in.read();
         } catch (IOException e) {
@@ -257,10 +255,10 @@ public class Display {
         System.out.flush();
     }
 
-    private static String multi(int occ, String sign) {
+    private static String multiSign(int multiplication, String sign) {
         String out = "";
 
-        for (int i = 0; i < occ; i++) {
+        for (int i = 0; i < multiplication; i++) {
             out += sign;
         }
         return out;
@@ -326,8 +324,8 @@ public class Display {
 
         String output = "";
 
-        String l1 = multi(form1, "─");
-        String l2 = multi(form2, "─");
+        String l1 = multiSign(form1, "─");
+        String l2 = multiSign(form2, "─");
 
         output += "┌" + l1 + "┬" + l2 + "┐\n";
 

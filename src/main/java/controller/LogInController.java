@@ -1,11 +1,9 @@
-package controler;
+package controller;
 
 import dao.sql.UsersDAO;
-import model.shop.Admin;
 import model.shop.User;
 import view.Display;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class LogInController {
@@ -13,7 +11,6 @@ public class LogInController {
 
     public void run() {
         boolean isRunning = true;
-        Scanner scanner = new Scanner(System.in);
         while (isRunning) {
             Display.clearScreen();
             Display.showMenu("logMenu");
@@ -36,7 +33,6 @@ public class LogInController {
                     break;
                 }
                 default: {
-//                    Display.clearScreen();
                 }
 
             }

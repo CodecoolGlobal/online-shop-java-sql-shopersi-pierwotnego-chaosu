@@ -1,11 +1,10 @@
-package services;
+package model.services;
 
 import dao.sql.BasketsDAO;
 import model.shop.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 public class BasketService {
     private ArrayList<HashMap<Product, Integer>> basket;
@@ -13,7 +12,6 @@ public class BasketService {
 
     public BasketService(int userId) {
         this.basket = new ArrayList<>();
-//        setProductsFromDB();
         this.userId = userId;
     }
 

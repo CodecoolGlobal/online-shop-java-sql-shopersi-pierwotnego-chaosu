@@ -40,7 +40,7 @@ public class User {
      }
 
      public boolean isAdmin(){
-        return getAdmin()==1 ? true:false;
+        return getAdmin() == 1;
      }
 
 }

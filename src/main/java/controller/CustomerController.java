@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 
 import dao.sql.BasketsDAO;
@@ -11,33 +11,33 @@ import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
 import view.Display;
 import model.shop.User;
-import model.shop.lists.OrderItemsList;
 import model.shop.lists.OrdersList;
 //import model.shop.lists.ProductList;
-import view.Display;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.Scanner;
 import java.util.Set;
 
-public class CustomerController {
+class CustomerController {
 
     private User user;
     private Basket basket;
     private ProductList productList;
     private OrdersList ordersList;
 
-    public CustomerController(User user) {
+    CustomerController(User user) {
         this.user = user;
         this.basket = new Basket(user.getId());
+        this.basket.setBasketFromDB();
         this.productList = new ProductList(new ProductDAO().read());
         this.ordersList = new OrdersList(new OrdersDAO().readOrders(user));
+        this.basket.updateProductList(this.productList);
+
     }
 
 
-    public void run() {
+    void run() {
 
         boolean isRunning = true;
 
@@ -58,7 +58,7 @@ public class CustomerController {
 
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
                 case 2: {
@@ -73,16 +73,19 @@ public class CustomerController {
                 }
                 case 4: {
                     Display.printBasket(basket);
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
                 case 5: {
                     Display.printBasket(basket);
                     editBasket();
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
-
+                case 6: {
+                    saveBasket();
+                    break;
+                }
                 case 7: {
                     makeNewOrder();
                     break;
@@ -90,14 +93,10 @@ public class CustomerController {
                 case 8: {
                     Display.clearScreen();
                     Display.printOrdersTable(ordersList, productList, user);
-                    Display.prompt();
+                    Display.pressForNexxt();
                     break;
                 }
 
-                case 9: {
-                    this.basket.setBasketFromDB();
-                    break;
-                }
                 case 0: {
                     isRunning = false;
                     break;
@@ -109,13 +108,17 @@ public class CustomerController {
         }
     }
 
+    private void saveBasket() {
+        this.basket.updateToDB();
+    }
+
 
     private void editBasket() {
         boolean isAsking = true;
         while (isAsking) {
 
             int prodId = Display.askForInt("Select productID");
-            final boolean isValid = productList.isIdValid(prodId); //&& productList.getProductById(prodId).isAvailable();
+            boolean isValid = productList.isIdValid(prodId); //&& productList.getProductById(prodId).isAvailable();
 
             if (isValid) {
                 int quantity = Display.askForInt("Set new amount of items / 0 to delete.");
@@ -129,6 +132,14 @@ public class CustomerController {
                     for (Product key : productSet) {
 
                         if (key.getId() == prodId) {
+
+                            int amount1 = productList.getProductById(prodId).getAmount();
+                            int amount2 = this.basket.getProducts().get(key);
+                            productList.getProductById(prodId).setAmount(amount1+amount2);
+
+
+
+
                             this.basket.getProducts().remove(key);
                             isAsking = false;
                             break;
@@ -142,6 +153,9 @@ public class CustomerController {
                     this.basket.getProducts().forEach((key, value) -> {
                         if (key.getId() == prodId) {
                             basket.getProducts().replace(key, quantity);
+                            int amount = productList.getProductById(prodId).getAmount();
+
+                            productList.getProductById(prodId).setAmount(amount+quantity);
                         }
 
                     });
@@ -177,28 +191,19 @@ public class CustomerController {
         }
     }
 
-    public void makeNewOrder() {
+    private void makeNewOrder() {
         if (!basket.getProducts().isEmpty()) {
+
             new OrdersDAO().create(user);
             ordersList.setOrders(new OrdersDAO().readOrders(user));
             Order newOrder = new OrdersDAO().readOrders(user).get(ordersList.getOrders().size() - 1);
             new OrdersItemsDAO().create(basket, newOrder);
             this.productList.updateAllProductsInDataBase();
 
-
-//            for (Product productFromBasket : basket.getProducts().keySet()) {
-//                for (Product productUpdated : productList.getProducts()) {
-//                    if (productFromBasket.getId() == productUpdated.getId()) {
-//                        int amount = productUpdated.getAmount() - basket.getProducts().get(productUpdated);
-//                        productUpdated.setAmount(amount);
-//                        new ProductDAO().update(productUpdated);
-//                    }
-//                }
-//            }
             basket.getProducts().clear();
             new BasketsDAO().delete(user);
             this.productList = new ProductList(new ProductDAO().read());
-            Display.printMessage("You have placed your order succesfully.");
+            Display.printMessage("You have placed your order successfully.");
 
         } else {
             Display.printMessage("Your basket is empty. Add items to basket.");
@@ -214,7 +219,7 @@ public class CustomerController {
         Scanner scanner = new Scanner(System.in);
 
         String out = scanner.next();
-        while (!out.matches("[0-"+String.valueOf(categoryList.getCategoryList().size())+"]+")) {
+        while (!out.matches("[0-"+ categoryList.getCategoryList().size() +"]+")) {
             Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
             out = scanner.next();
             if (out.equals("0")) break;

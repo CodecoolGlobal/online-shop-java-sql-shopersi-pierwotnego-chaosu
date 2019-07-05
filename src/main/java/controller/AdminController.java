@@ -1,7 +1,5 @@
-package controler;
+package controller;
 
-import dao.sql.CategoryDAO;
-import dao.sql.OrdersDAO;
 import dao.sql.ProductDAO;
 import dao.sql.UsersDAO;
 import model.shop.Category;
@@ -10,28 +8,27 @@ import model.shop.User;
 import model.shop.abc.ProductList;
 import model.shop.lists.CategoryList;
 //import model.shop.abc.ProductList;
-import model.shop.lists.OrdersList;
 import model.shop.lists.UserList;
 import view.Display;
 
 import java.util.Scanner;
 
-public class AdminController {
-    private User user;
+class AdminController {
+    private final User user;
     private ProductList productList;
-    private UserList userList;
+    private final UserList userList;
 //    private OrdersList ordersList;
 
-    public AdminController(User user) {
+    AdminController(User user) {
         this.user = user;
         this.productList = new ProductList(new ProductDAO().read());
         this.userList = new UserList(new UsersDAO().read());
 
     }
 
-    public void run() {
+    void run() {
         boolean isRunning = true;
-        Scanner scanner = new Scanner(System.in);
+        //Scanner scanner = new Scanner(System.in);
         while (isRunning) {
             Display.clearScreen();
             Display.showMenu("adminMenu");
@@ -41,25 +38,30 @@ public class AdminController {
 
             switch (option) {
 
+                case 1: {
+
+                    Display.clearScreen();
+                    Display.printProductTable(productList, user);
+                    Display.pressForNexxt();
+                    break;
+                }
+
                 case 2: {
                     addNewProduct();
                     break;
                 }
 
                 case 3: {
+                    Display.clearScreen();
+                    Display.printProductTable(productList, user);
                     editProduct();
                     break;
                 }
 
                 case 4: {
-                    deactivateAProduct();
-                    break;
-                }
-
-                case 1: {
-
                     Display.clearScreen();
                     Display.printProductTable(productList, user);
+                    deactivateAProduct();
                     break;
                 }
 
@@ -67,21 +69,29 @@ public class AdminController {
 
                     Display.clearScreen();
                     showCategories();
+                    Display.pressForNexxt();
+
                     break;
                 }
 
                 case 6: {
+                    Display.clearScreen();
+                    showCategories();
                     addNewCategory();
                     break;
                 }
 
                 case 7: {
+                    Display.clearScreen();
                     editCategory();
                     break;
                 }
 
                 case 9: {
+                    Display.clearScreen();
                     Display.printOngoingOrders(userList, productList);
+                    Display.pressForNexxt();
+
                     break;
                 }
 
@@ -105,7 +115,7 @@ public class AdminController {
         CategoryList categoryList = new CategoryList();
         Display.printCategories(categoryList);
         String idOfCategory = Display.askForString("Category id: ");
-        while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
+        while (!idOfCategory.matches("[0-" + categoryList.getCategoryList().size() + "]+")) {
             Display.printMessage("There is no such category. Choose correct Category ID or 0 to exit:");
             idOfCategory = Display.askForString("Category id: ");
             if (idOfCategory.equals("0")) break;
@@ -143,12 +153,12 @@ public class AdminController {
 
             if (!amount.equals("")) product.setAmount(Integer.valueOf(amount));
 
-            System.out.print("\nNew category id: ");
+            System.out.println("\nNew category id: ");
 
             CategoryList categoryList = new CategoryList();
             Display.printCategories(categoryList);
             String idOfCategory = sc2.nextLine();
-            while (!idOfCategory.matches("[0-" + String.valueOf(categoryList.getCategoryList().size()) + "]+")) {
+            while (!idOfCategory.matches("[0-" + categoryList.getCategoryList().size() + "]+")) {
                 if (idOfCategory.equals("") || idOfCategory.equals("0")) break;
                 Display.printMessage("There is no such category. Choose correct Category ID or 0 to stop editing product:");
                 idOfCategory = Display.askForString("Category id: ");

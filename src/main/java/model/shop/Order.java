@@ -1,11 +1,8 @@
 package model.shop;
 
 import dao.sql.OrdersDAO;
-import dao.sql.OrdersItemsDAO;
-import dao.sql.UsersDAO;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Order {
