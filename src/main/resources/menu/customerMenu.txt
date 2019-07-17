@@ -1,3 +1,9 @@
-1. Show shop
-2. Zakupy
-0. EXIT
+1. Show products
+2. Show Products from specific category
+3. Add new product to basket
+4. Show basket
+5. Edit basket
+6. Save basket
+7. Place order
+8. Show orders
+0. LOGOUT

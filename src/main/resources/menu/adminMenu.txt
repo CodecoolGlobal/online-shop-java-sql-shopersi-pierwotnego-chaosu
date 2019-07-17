@@ -1,3 +1,10 @@
-1. AAAAAAAA
-2. BBBBBBBBBBBB
-0. EXIT
+1. Show products
+2. Create new product
+3. Update product
+4. Activate/deactivate product
+5. Show categories
+6. Add new category
+7. Rename category
+8. Remove category
+9. Show ongoing orders
+0. LOGOUT

@@ -1,4 +1,4 @@
-package model.controller;
+package model.display;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,10 +10,9 @@ public class FileReaderForDispaly {
 
     public static List<String> showMenu(String menuName) {
 
-        List<String> lines = new ArrayList<String>();
+        List<String> lines = new ArrayList<>();
 
         try{
-//            File file = new File("src/main/resources/menu/logMenu.txt");
             File file = new File("src/main/resources/menu/"+ menuName +".txt");
 
 

@@ -10,10 +10,7 @@ public class DataSource {
         this.url = "jdbc:sqlite:src/main/resources/onlineshop.db";
         this.driverName = "org.sqlite.JDBC";
     }
-//    private static String username = "root";
-//    private static String password = "root";
     private Connection con;
-//    private static String urlstring;
     private Statement stmt = null;
     private ResultSet rs = null;
 
@@ -24,11 +21,9 @@ public class DataSource {
             con = DriverManager.getConnection(url);
             }
         catch (SQLException ex) {
-            // log an exception. fro example:
             System.out.println("Failed to create the database connection.");
             }
         catch (ClassNotFoundException ex) {
-            // log an exception. for example:
             System.out.println("Driver not found.");
             }
         return con;
@@ -37,7 +32,6 @@ public class DataSource {
     public ResultSet executeQuery(String sql){
         DataSource ds = new DataSource();
         this.con = ds.getConnection();
-//        System.out.println("Opened database successfully");
         try {
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
@@ -50,7 +44,6 @@ public class DataSource {
     public void updateQuery(String sql){
         DataSource ds = new DataSource();
         this.con = ds.getConnection();
-//        System.out.println("Opened database successfully");
         try {
             stmt = con.createStatement();
             stmt.executeUpdate(sql);
